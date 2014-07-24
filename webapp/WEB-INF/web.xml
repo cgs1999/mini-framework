@@ -4,27 +4,20 @@
 	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 		http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
 	<error-page>
 		<error-code>404</error-code>
-		<location>/error/404.htm</location>
+		<location>/error/404.html</location>
 	</error-page>
 	<error-page>
 		<error-code>500</error-code>
-		<location>/error/500.htm</location>
+		<location>/error/500.html</location>
 	</error-page>
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:applicationContext.xml</param-value>
-	</context-param>
-
-
-	<servlet>
-		<servlet-name>springmvc</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-
-	<!-- spring security 权限 -->
+	
+	<!-- spring security过滤器 -->
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -33,12 +26,6 @@
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
-	<!-- 覆盖default servlet的/, springmvc servlet将处理原来处理静态资源的映射 -->
-	<servlet-mapping>
-		<servlet-name>springmvc</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
 
 	<!-- Spring提供的encoding过滤器 -->
 	<filter>
@@ -53,10 +40,8 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<!--
-		浏览器不支持put,delete等method,由该filter将/feed?_method=delete转换为标准的http
-		delete方法
-	-->
+
+	<!-- 浏览器不支持put,delete等method,由该filter将/feed?_method=delete转换为标准的http delete方法 -->
 	<filter>
 		<filter-name>HiddenHttpMethodFilter</filter-name>
 		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
@@ -66,15 +51,55 @@
 		<servlet-name>springmvc</servlet-name>
 	</filter-mapping>
 
+	<!--Spring配置，若不指定配置文件位置则默认为WebRoot/WEB-INF/applicationContext.xml -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 	
+	<!--SpringMVC配置，若不指定配置文件位置则默认为WebRoot/WEB-INF/${servlet-name}-servlet.xml -->
+	<servlet>  
+        <servlet-name>springmvc</servlet-name>  
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>  
+        <init-param>  
+            <param-name>contextConfigLocation</param-name>  
+            <param-value>classpath:springmvc-servlet.xml</param-value>  
+        </init-param>  
+        <!-- 加载优先级 调到最高 -->
+        <load-on-startup>1</load-on-startup>  
+    </servlet>
+	
+	<!-- 覆盖default servlet的/, springmvc servlet将处理原来处理静态资源的映射 -->
+	<servlet-mapping>
+		<servlet-name>springmvc</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 验证码 -->
+	<servlet>
+		<servlet-name>verifyCode</servlet-name>
+		<servlet-class>com.duoduo.common.servlet.VerifyCodeServlet</servlet-class>
+		<init-param>
+			<param-name>sessionKey</param-name>
+			<param-value>verifyCode</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>verifyCode</servlet-name>
+		<url-pattern>/verifyCodeImage</url-pattern>
+	</servlet-mapping>
 
-
+	<!-- 会话时间-->
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>
 
 
 
+	<!-- 下载文件类型定义-->
 	<mime-mapping>
 		<extension>ico</extension>
 		<mime-type>image/x-icon</mime-type>
@@ -86,7 +111,7 @@
 	<mime-mapping>
 		<extension>mht</extension>
 		<mime-type>application/octet-stream</mime-type>
-	</mime-mapping>	
+	</mime-mapping>
 	<mime-mapping>
 		<extension>iso</extension>
 		<mime-type>application/octet-stream</mime-type>
@@ -116,116 +141,116 @@
 		<mime-type>image/x-icon</mime-type>
 	</mime-mapping>
 
-    <mime-mapping>
-        <extension>docx</extension>
-        <mime-type>application/vnd.openxmlformats-officedocument.wordprocessingml.document</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>docm</extension>
-        <mime-type>application/vnd.ms-word.document.macroEnabled.12</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>dotx</extension>
-        <mime-type>application/vnd.openxmlformats-officedocument.wordprocessingml.template</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>dotm</extension>
-        <mime-type>application/vnd.ms-word.template.macroEnabled.12</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>xlsx</extension>
-        <mime-type>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>xlsm</extension>
-        <mime-type>application/vnd.ms-excel.sheet.macroEnabled.12</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>xltx</extension>
-        <mime-type>application/vnd.openxmlformats-officedocument.spreadsheetml.template</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>xltm</extension>
-        <mime-type>application/vnd.ms-excel.template.macroEnabled.12</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>xlsb</extension>
-        <mime-type>application/vnd.ms-excel.sheet.binary.macroEnabled.12</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>xlam</extension>
-        <mime-type>application/vnd.ms-excel.addin.macroEnabled.12</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>pptx</extension>
-        <mime-type>application/vnd.openxmlformats-officedocument.presentationml.presentation</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>pptm</extension>
-        <mime-type>application/vnd.ms-powerpoint.presentation.macroEnabled.12</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>ppsx</extension>
-        <mime-type>application/vnd.openxmlformats-officedocument.presentationml.slideshow</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>ppsm</extension>
-        <mime-type>application/vnd.ms-powerpoint.slideshow.macroEnabled.12</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>potx</extension>
-        <mime-type>application/vnd.openxmlformats-officedocument.presentationml.template</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>potm</extension>
-        <mime-type>application/vnd.ms-powerpoint.template.macroEnabled.12</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>ppam</extension>
-        <mime-type>application/vnd.ms-powerpoint.addin.macroEnabled.12</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>sldx</extension>
-        <mime-type>application/vnd.openxmlformats-officedocument.presentationml.slide</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>sldm</extension>
-        <mime-type>application/vnd.ms-powerpoint.slide.macroEnabled.12</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>thmx</extension>
-        <mime-type>application/vnd.ms-officetheme</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>onetoc</extension>
-        <mime-type>application/onenote</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>onetoc2</extension>
-        <mime-type>application/onenote</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>onetmp</extension>
-        <mime-type>application/onenote</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>onepkg</extension>
-        <mime-type>application/onenote</mime-type>
-    </mime-mapping>
-    
-    
-     <mime-mapping>
-        <extension>accdb</extension>
-        <mime-type>application/msacces</mime-type>
-    </mime-mapping>
-    
-    <mime-mapping>
-        <extension>vsd</extension>
-        <mime-type>application/vnd.visio</mime-type>
-    </mime-mapping>
-    
-    <mime-mapping>
-        <extension>mpp</extension>
-        <mime-type>application/vnd.ms-project</mime-type>
-    </mime-mapping>
+	<mime-mapping>
+		<extension>docx</extension>
+		<mime-type>application/vnd.openxmlformats-officedocument.wordprocessingml.document</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>docm</extension>
+		<mime-type>application/vnd.ms-word.document.macroEnabled.12</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>dotx</extension>
+		<mime-type>application/vnd.openxmlformats-officedocument.wordprocessingml.template</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>dotm</extension>
+		<mime-type>application/vnd.ms-word.template.macroEnabled.12</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>xlsx</extension>
+		<mime-type>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>xlsm</extension>
+		<mime-type>application/vnd.ms-excel.sheet.macroEnabled.12</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>xltx</extension>
+		<mime-type>application/vnd.openxmlformats-officedocument.spreadsheetml.template</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>xltm</extension>
+		<mime-type>application/vnd.ms-excel.template.macroEnabled.12</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>xlsb</extension>
+		<mime-type>application/vnd.ms-excel.sheet.binary.macroEnabled.12</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>xlam</extension>
+		<mime-type>application/vnd.ms-excel.addin.macroEnabled.12</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>pptx</extension>
+		<mime-type>application/vnd.openxmlformats-officedocument.presentationml.presentation</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>pptm</extension>
+		<mime-type>application/vnd.ms-powerpoint.presentation.macroEnabled.12</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>ppsx</extension>
+		<mime-type>application/vnd.openxmlformats-officedocument.presentationml.slideshow</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>ppsm</extension>
+		<mime-type>application/vnd.ms-powerpoint.slideshow.macroEnabled.12</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>potx</extension>
+		<mime-type>application/vnd.openxmlformats-officedocument.presentationml.template</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>potm</extension>
+		<mime-type>application/vnd.ms-powerpoint.template.macroEnabled.12</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>ppam</extension>
+		<mime-type>application/vnd.ms-powerpoint.addin.macroEnabled.12</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>sldx</extension>
+		<mime-type>application/vnd.openxmlformats-officedocument.presentationml.slide</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>sldm</extension>
+		<mime-type>application/vnd.ms-powerpoint.slide.macroEnabled.12</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>thmx</extension>
+		<mime-type>application/vnd.ms-officetheme</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>onetoc</extension>
+		<mime-type>application/onenote</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>onetoc2</extension>
+		<mime-type>application/onenote</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>onetmp</extension>
+		<mime-type>application/onenote</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>onepkg</extension>
+		<mime-type>application/onenote</mime-type>
+	</mime-mapping>
+
+	<!-- access -->
+	<mime-mapping>
+		<extension>accdb</extension>
+		<mime-type>application/msacces</mime-type>
+	</mime-mapping>
+	<!-- visio -->
+	<mime-mapping>
+		<extension>vsd</extension>
+		<mime-type>application/vnd.visio</mime-type>
+	</mime-mapping>
+	<!-- project -->
+	<mime-mapping>
+		<extension>mpp</extension>
+		<mime-type>application/vnd.ms-project</mime-type>
+	</mime-mapping>
 </web-app>
