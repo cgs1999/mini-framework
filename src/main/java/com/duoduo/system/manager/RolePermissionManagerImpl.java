@@ -16,7 +16,7 @@ import com.duoduo.system.model.RolePermission;
  * @version 1.0.0
  */
 @Transactional
-@Service("rolePermissionService")
+@Service("rolePermissionManager")
 public class RolePermissionManagerImpl implements RolePermissionManager {
 
 	@Resource

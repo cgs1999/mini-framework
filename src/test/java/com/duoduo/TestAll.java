@@ -14,7 +14,6 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
 		TestCore.class, TestSystem.class
 })
-// @//ContextConfiguration(locations = "classpath:config/applicationContext.xml")
 public class TestAll {
 
 }

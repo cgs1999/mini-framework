@@ -35,9 +35,10 @@
             <tx:method name="*" />  
         </tx:attributes>  
     </tx:advice> 
-     
+    
+    <!-- 
     <aop:config>
 		<aop:advisor pointcut="execution(* com.duoduo.*.service.*.*(..))" advice-ref="txAdvice" />
 	</aop:config>
-
+	 -->
 </beans>

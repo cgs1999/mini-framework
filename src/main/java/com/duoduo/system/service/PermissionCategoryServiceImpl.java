@@ -20,7 +20,7 @@ import com.duoduo.system.vo.PermissionCategoryVO;
  * @version 1.0.0
  */
 @Transactional
-@Service("permissionCategoryManager")
+@Service("permissionCategoryService")
 public class PermissionCategoryServiceImpl implements PermissionCategoryService {
 
 	@Resource

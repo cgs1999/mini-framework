@@ -20,7 +20,7 @@ import com.duoduo.system.vo.PermissionVO;
  * @version 1.0.0
  */
 @Transactional
-@Service("permissionService")
+@Service("permissionManager")
 public class PermissionManagerImpl implements PermissionManager {
 
 	@Resource

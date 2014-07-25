@@ -95,7 +95,7 @@ public class UserDao extends BaseDao {
 				ps.setString(count++, user.getSalt());
 				ps.setString(count++, user.getEmail());
 				ps.setString(count++, user.getPhone());
-				ps.setInt(count++, user.getStatus());
+				ps.setObject(count++, user.getStatus());
 				return ps;
 			}
 		}, keyHolder);
@@ -162,6 +162,33 @@ public class UserDao extends BaseDao {
 		params.put("likeName", super.filterKeyPara(name));
 		params.put("likeEmail", super.filterKeyPara(email));
 		params.put("likePhone", super.filterKeyPara(phone));
+		params.put("start", page.getStart());
+		params.put("limit", page.getLimit());
+
+		page.setTotal(super.getTotalCount(countSql, params));
+		page.setRows(super.getJdbcTemplate().query(queryByPageSql, entityRowMapper, params));
+		return page;
+	}
+
+	/**
+	 * 分页查询用户列表（关键字模糊查询，模糊查询内容：帐号、姓名、电子邮箱、电话）
+	 */
+	public Page<User> pagingList(String key, Page<User> page) {
+		String countSql = "select count(id) from sys_user where 1=1";
+		String queryByPageSql = "select * from sys_user where 1=1";
+
+		if (StringUtils.hasText(key)) {
+			countSql += " and ((account like :likeAccount) or (name like :likeName) or (email like :likeEmail) or (phone like :likePhone))";
+			queryByPageSql += " and ((account like :likeAccount) or (name like :likeName) or (email like :likeEmail) or (phone like :likePhone))";
+		}
+
+		queryByPageSql += " limit :start,:limit";
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("likeAccount", super.filterKeyPara(key));
+		params.put("likeName", super.filterKeyPara(key));
+		params.put("likeEmail", super.filterKeyPara(key));
+		params.put("likePhone", super.filterKeyPara(key));
 		params.put("start", page.getStart());
 		params.put("limit", page.getLimit());
 

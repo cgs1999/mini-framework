@@ -20,7 +20,7 @@ import com.duoduo.system.vo.UserVO;
  * @version 1.0.0
  */
 @Transactional
-@Service("userService")
+@Service("userManager")
 public class UserManagerImpl implements UserManager {
 
 	@Resource

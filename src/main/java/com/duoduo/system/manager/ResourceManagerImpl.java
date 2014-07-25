@@ -19,7 +19,7 @@ import com.duoduo.system.vo.ResourceVO;
  * @version 1.0.0
  */
 @Transactional
-@Service("resourceService")
+@Service("resourceManager")
 public class ResourceManagerImpl implements ResourceManager {
 
 	private static final String TYPE_MENU = "1";

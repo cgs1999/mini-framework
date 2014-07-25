@@ -20,7 +20,7 @@ import com.duoduo.system.vo.RoleVO;
  * @version 1.0.0
  */
 @Transactional
-@Service("roleService")
+@Service("roleManager")
 public class RoleManagerImpl implements RoleManager {
 
 	@Resource

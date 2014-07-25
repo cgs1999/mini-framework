@@ -16,7 +16,7 @@ import com.duoduo.system.model.UserRole;
  * @version 1.0.0
  */
 @Transactional
-@Service("userRoleService")
+@Service("userRoleManager")
 public class UserRoleManagerImpl implements UserRoleManager {
 
 	@Resource

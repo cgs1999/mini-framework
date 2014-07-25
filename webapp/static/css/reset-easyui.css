@@ -1,0 +1,269 @@
+
+/*reset*/
+.datagrid-toolbar{
+	background: white;
+	height:104px;
+}
+
+.toolbar{
+  height:54px;
+}
+
+.toolbar .search-bar{
+  margin-top:12px;
+  height:40px;
+  text-align: left;
+}
+
+.datagrid-toolbar .search-bar{
+	margin-top:12px;
+	height:40px;
+  text-align: right;
+}
+.datagrid-toolbar .operate-bar{
+	height:40px;
+	margin-top:12px;
+	text-align: right;
+}
+.datagrid-toolbar.inline{
+  height:52px;
+}
+
+.datagrid-toolbar.inline .search-bar{
+  text-align: left;
+  float:left;
+  width:auto;
+}
+.datagrid-toolbar.inline .operate-bar{
+  width:auto;
+  float:right;
+}
+
+.datagrid-toolbar .search-bar .input-text,.toolbar .search-bar .input-text{
+	 border:none;
+   border-bottom:1px solid #949799;
+   color: #616060;
+   font-size: 12px;
+   height: 24px;
+   width: 110px;
+   padding: 0px 0;
+}
+.datagrid-toolbar .search-bar .input-text.active,.toolbar .search-bar .input-text.active{
+  color:#2E8CC1;
+  border-color:#2E8CC1;
+}
+.datagrid-toolbar .search-bar .sep{
+    margin-left: 19px;
+}
+
+.datagrid-header-row, .datagrid-row {
+  height: 26px;
+}
+
+.datagrid-header, .datagrid-td-rownumber{
+	background: white;
+  filter:none;
+}
+
+.datagrid-header, .datagrid-toolbar, .datagrid-pager, .datagrid-footer-inner {
+    border:none;
+}
+
+.datagrid-header{
+	border-top:1px solid #949799;
+	
+}
+
+
+.datagrid-header td,.datagrid-body td,.datagrid-footer td {
+	border:0;
+}
+
+.datagrid-header td, .datagrid-header td.datagrid-header-over{
+  background: url("../images/table_head_td.png?t=5.0.3978328151") no-repeat #fff;
+  color:#8B8B8B;
+  cursor: default;
+}
+.datagrid-header td[rowspan="0"]{
+  background-image:none;
+}
+
+
+.datagrid-header .datagrid-cell {
+    color:#8B8B8B;
+    line-height: 24px;
+}
+
+.datagrid-body .datagrid-cell,.datagrid-body .datagrid-cell a{
+    color:#4E4E4E;
+}
+
+.datagrid-row-alt {
+    background: none repeat scroll 0 0 #fff;
+}
+
+
+.datagrid-row-over {
+  background: #fff;
+  color: #007ac0;
+  cursor: pointer;
+}
+
+.datagrid-row-over .datagrid-cell,.datagrid-row-over .datagrid-cell a{
+   color: #007ac0;
+}
+
+.datagrid-row-selected {
+    background: url("../images/table-body-td.png?t=5.0.3552141330") repeat-y #5EB9EF;
+    color: #fff;
+}
+
+.datagrid-row-selected .datagrid-cell,.datagrid-row-selected .datagrid-cell a{
+  color: #fff;
+}
+
+
+.datagrid-cell-rownumber{
+  color:#8B8B8B;
+}
+
+.datagrid-toolbar, .datagrid-pager {
+  background: none;
+}
+.datagrid .datagrid-pager {
+  border:none;
+}
+
+.pagination table {
+  float: right;
+  height: 30px;
+  color: #4E4E4E;
+}
+.pagination .pagination-num{
+  border:none;
+  border-bottom: 1px solid #8B8B8B;
+  width:22px;
+  padding:0px;
+   color: #4E4E4E;
+  font-weight: bold;
+
+}
+.pagination a.l-btn{
+  border-radius: 0px;
+  height: 20px;
+}
+.pagination a.l-btn-plain{
+  background:none;
+  border: none;
+  padding: 0px;
+}
+.pagination a.l-btn-disabled {
+    opacity: 1;
+    filter:none;
+}
+.pagination  a.l-btn-plain span.l-btn-left {
+    padding-left: 0px;
+}
+.pagination a.l-btn span span.l-btn-text {
+  top:0px;
+  height:20px;
+}
+.pagination a.l-btn span span span.l-btn-empty {
+    width: 21px;
+    height:20px;
+}
+.pagination-prev,.pagination-next{
+    background: url("../images/easyui/pagination_icons.png?t=5.0.270688469") no-repeat;
+}
+.pagination-prev{
+    background-position: 0 -20px;
+}
+
+.pagination a:hover.l-btn-plain .pagination-prev{
+  background-position: -21px -20px;
+}
+
+.pagination a:active.l-btn-plain .pagination-prev{
+  background-position: -42px -20px;
+}
+
+.pagination a.l-btn-disabled .pagination-prev,.pagination a:hover.l-btn-plain-disabled .pagination-prev{
+    background-position: -63px -20px;
+}
+
+.pagination-next{
+    background-position: 0 0px;
+}
+
+.pagination a:hover.l-btn-plain .pagination-next{
+  background-position: -21px 0px;
+}
+
+.pagination a:active.l-btn-plain .pagination-next{
+  background-position: -42px 0px;
+}
+
+.pagination a.l-btn-disabled .pagination-next,.pagination a:hover.l-btn-plain-disabled .pagination-next{
+    background-position: -63px 0px;
+}
+
+
+
+.tree-node {
+  margin-bottom: 8px;
+  color: #4E4E4E;
+}
+
+.tree-icon.tree-folder,.tree-icon.tree-file {
+  width:0px;
+ }
+.tree-icon.icon-empty{
+  width:0px;
+}
+
+.tree-expanded, .tree-collapsed, .tree-folder, .tree-file, .tree-checkbox, .tree-indent {
+    display: inline-block;
+    height: 18px;
+    overflow: hidden;
+    vertical-align: top;
+    width: 12px;
+}
+
+.tree-expanded,.tree-expanded-hover,.tree-collapsed,.tree-collapsed-hover{
+   background: url("../images/easyui/tree_icons.png?t=5.0.2962950376") no-repeat;
+}
+
+.tree-expanded {
+    background-position:  -20px 0;
+}
+.tree-expanded-hover {
+    background-position:-52px 0;
+}
+.tree-collapsed {
+    background-position:  -4px 0;
+}
+.tree-collapsed-hover {
+    background-position: -36px 0 ;
+}
+.tree-node-selected {
+    background:none;
+}
+.tree-node-selected .tree-title{
+    background: url("../images/aside-selected.png?t=5.0.3404059134") no-repeat scroll 0 0 #53AFE4;
+    color: #fff;
+}
+
+.tree-node-hover {
+  background: #fff;
+  color: #007ac0;
+  cursor: pointer;
+}
+
+.tree-indent{
+
+}
+
+
+.datagrid-mask{
+  background: #fff;
+}
