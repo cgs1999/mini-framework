@@ -6,11 +6,11 @@ import javax.annotation.Resource;
 
 import junit.framework.Assert;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.junit.runners.MethodSorters;
 
+import com.duoduo.core.test.BaseTest;
 import com.duoduo.system.model.User;
 
 /**
@@ -19,27 +19,21 @@ import com.duoduo.system.model.User;
  * @date 2014-7-21 下午4:21:27
  * @version 1.0.0
  */
-// 使用@RunWith(SpringJUnit4ClassRunner.class),才能使测试运行于Spring测试环境
-@RunWith(SpringJUnit4ClassRunner.class)
-// @ContextConfiguration 注解有以下两个常用的属性：
-// locations：可以通过该属性手工指定 Spring 配置文件所在的位置,可以指定一个或多个 Spring 配置文件
-// inheritLocations：是否要继承父测试类的 Spring 配置文件，默认为 true
-// 如果只有一个配置文件就直接写locations=“配置文件路径+名”
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class TestUserDao {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class TestUserDao extends BaseTest {
 
-	private static Long userId;
+	private static Long entityId;
 
 	@Resource
 	private UserDao userDao;
 
 	@Test
-	public void test() {
+	public void test00() {
 		System.out.println(getClass());
 	}
 
 	@Test
-	public void testSave() {
+	public void test10Save() {
 		User user = new User();
 		user.setAccount("cgs");
 		user.setName("陈格生");
@@ -50,25 +44,25 @@ public class TestUserDao {
 
 		Assert.assertNotNull(user);
 
-		userId = user.getId();
-		System.out.println("userId=" + userId);
+		entityId = user.getId();
+		System.out.println("entityId=" + entityId);
 	}
 
 	@Test
-	public void testGetById() {
-		if (userId != null) {
-			User user = userDao.getById("" + userId);
+	public void test20GetById() {
+		if (entityId != null) {
+			User user = userDao.getById("" + entityId);
 			Assert.assertNotNull(user);
 			Assert.assertEquals(user.getAccount(), "cgs");
 		} else {
-			System.out.println("testGetById userId is: " + userId);
+			System.out.println("testGetById entityId is: " + entityId);
 		}
 	}
 
 	@Test
-	public void testUpdate() {
-		if (userId != null) {
-			User user = userDao.getById("" + userId);
+	public void test30Update() {
+		if (entityId != null) {
+			User user = userDao.getById("" + entityId);
 			Assert.assertNotNull(user);
 
 			String salt = UUID.randomUUID().toString();
@@ -76,28 +70,28 @@ public class TestUserDao {
 
 			userDao.update(user);
 
-			user = userDao.getById("" + userId);
+			user = userDao.getById("" + entityId);
 			Assert.assertNotNull(user);
 			Assert.assertEquals(user.getSalt(), salt);
 		} else {
-			System.out.println("testUpdate userId is: " + userId);
+			System.out.println("testUpdate entityId is: " + entityId);
 		}
 	}
 
 	@Test
-	public void testDelete() {
-		if (userId != null) {
-			User user = userDao.getById("" + userId);
+	public void test40Delete() {
+		if (entityId != null) {
+			User user = userDao.getById("" + entityId);
 			Assert.assertNotNull(user);
 
-			userDao.delete("" + userId);
+			userDao.delete("" + entityId);
 
-			user = userDao.getById("" + userId);
+			user = userDao.getById("" + entityId);
 			Assert.assertNull(user);
 
-			userId = null;
+			entityId = null;
 		} else {
-			System.out.println("testDelete userId is: " + userId);
+			System.out.println("testDelete entityId is: " + entityId);
 		}
 	}
 }
