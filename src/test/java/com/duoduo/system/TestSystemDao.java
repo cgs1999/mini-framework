@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 import com.duoduo.system.dao.TestPermissionDao;
 import com.duoduo.system.dao.TestPermissionResourceDao;
-import com.duoduo.system.dao.TestPerssiomCategoryDao;
+import com.duoduo.system.dao.TestPermissionCategoryDao;
 import com.duoduo.system.dao.TestResourceDao;
 import com.duoduo.system.dao.TestRoleDao;
 import com.duoduo.system.dao.TestRolePermissionDao;
@@ -21,7 +21,7 @@ import com.duoduo.system.dao.TestUserRoleDao;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-		TestUserDao.class, TestRoleDao.class, TestPerssiomCategoryDao.class, TestPermissionDao.class,
+		TestUserDao.class, TestRoleDao.class, TestPermissionCategoryDao.class, TestPermissionDao.class,
 		TestResourceDao.class, TestUserRoleDao.class, TestRolePermissionDao.class, TestPermissionResourceDao.class
 })
 public class TestSystemDao {

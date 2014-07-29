@@ -156,9 +156,31 @@ public class ResourceDao extends BaseDao {
 		params.put("limit", page.getLimit());
 
 		page.setTotal(super.getTotalCount(countSql, params));
-		page.setRows(super.getJdbcTemplate().query(queryByPageSql, entityRowMapper, params));
+		page.setRows(super.getNamedParameterJdbcTemplate().query(queryByPageSql, params, entityRowMapper));
 		return page;
 	}
+
+	// /**
+	// * 分页查询资源列表（模糊查询，条件为：资源名称）
+	// */
+	// public Page<Resource> pagingList(String name, Page<Resource> page) {
+	// String countSql = "select count(id) from sys_resource where 1=1";
+	// String queryByPageSql = "select r.*,r2.name as parentName from sys_resource r"
+	// + " left join sys_resource r2 on r2.id=r.parent_id" + " where 1=1";
+	//
+	// if (StringUtils.hasText(name)) {
+	// countSql += " and name like ?";
+	// queryByPageSql += " and name like ?";
+	// }
+	//
+	// queryByPageSql += " limit ?,?";
+	//
+	// String likeName = super.filterKeyPara(name);
+	// page.setTotal(super.getTotalCount(countSql, likeName));
+	// page.setRows(super.getJdbcTemplate().query(queryByPageSql, entityRowMapper, likeName, page.getStart(),
+	// page.getLimit()));
+	// return page;
+	// }
 
 	private static final String listByUserIdSql = "select r.* from sys_resource r"
 			+ " left join sys_permission_resource pr on pr.resource_id=r.id"

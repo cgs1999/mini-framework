@@ -152,7 +152,28 @@ public class PermissionCategoryDao extends BaseDao {
 		params.put("limit", page.getLimit());
 
 		page.setTotal(super.getTotalCount(countSql, params));
-		page.setRows(super.getJdbcTemplate().query(queryByPageSql, entityRowMapper, params));
+		page.setRows(super.getNamedParameterJdbcTemplate().query(queryByPageSql, params, entityRowMapper));
 		return page;
 	}
+
+	// /**
+	// * 分页查询权限分类列表（模糊查询，条件为：权限分类名称）
+	// */
+	// public Page<PermissionCategory> pagingList(String name, Page<PermissionCategory> page) {
+	// String countSql = "select count(id) from sys_permission_category where 1=1";
+	// String queryByPageSql = "select * from sys_permission_category where 1=1";
+	//
+	// if (StringUtils.hasText(name)) {
+	// countSql += " and name like ?";
+	// queryByPageSql += " and name like ?";
+	// }
+	//
+	// queryByPageSql += " limit ?,?";
+	//
+	// String likeName = super.filterKeyPara(name);
+	// page.setTotal(super.getTotalCount(countSql, likeName));
+	// page.setRows(super.getJdbcTemplate().query(queryByPageSql, entityRowMapper, likeName, page.getStart(),
+	// page.getLimit()));
+	// return page;
+	// }
 }

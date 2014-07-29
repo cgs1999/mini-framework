@@ -166,7 +166,7 @@ public class UserDao extends BaseDao {
 		params.put("limit", page.getLimit());
 
 		page.setTotal(super.getTotalCount(countSql, params));
-		page.setRows(super.getJdbcTemplate().query(queryByPageSql, entityRowMapper, params));
+		page.setRows(super.getNamedParameterJdbcTemplate().query(queryByPageSql, params, entityRowMapper));
 		return page;
 	}
 
@@ -193,7 +193,67 @@ public class UserDao extends BaseDao {
 		params.put("limit", page.getLimit());
 
 		page.setTotal(super.getTotalCount(countSql, params));
-		page.setRows(super.getJdbcTemplate().query(queryByPageSql, entityRowMapper, params));
+		page.setRows(super.getNamedParameterJdbcTemplate().query(queryByPageSql, params, entityRowMapper));
 		return page;
 	}
+
+	// /**
+	// * 分页查询用户列表（模糊查询，条件为：帐号、姓名、电子邮箱、电话）
+	// */
+	// public Page<User> pagingList(String account, String name, String email, String phone, Page<User> page) {
+	// String countSql = "select count(id) from sys_user where 1=1";
+	// String queryByPageSql = "select * from sys_user where 1=1";
+	//
+	// if (StringUtils.hasText(account)) {
+	// countSql += " and account like ?";
+	// queryByPageSql += " and account like ?";
+	// }
+	//
+	// if (StringUtils.hasText(name)) {
+	// countSql += " and name like ?";
+	// queryByPageSql += " and name like ?";
+	// }
+	//
+	// if (StringUtils.hasText(email)) {
+	// countSql += " and email like ?";
+	// queryByPageSql += " and email like ?";
+	// }
+	//
+	// if (StringUtils.hasText(phone)) {
+	// countSql += " and phone like ?";
+	// queryByPageSql += " and phone like ?";
+	// }
+	//
+	// queryByPageSql += " limit ?,?";
+	//
+	// String likeAccount = super.filterKey(account);
+	// String likeName = super.filterKey(name);
+	// String likeEmail = super.filterKey(email);
+	// String likePhone = super.filterKey(phone);
+	// page.setTotal(super.getTotalCount(countSql, likeAccount, likeName, likeEmail, likePhone));
+	// page.setRows(super.getJdbcTemplate().query(queryByPageSql, entityRowMapper, likeAccount, likeName, likeEmail,
+	// likePhone, page.getStart(), page.getLimit()));
+	// return page;
+	// }
+	//
+	// /**
+	// * 分页查询用户列表（关键字模糊查询，模糊查询内容：帐号、姓名、电子邮箱、电话）
+	// */
+	// public Page<User> pagingList(String key, Page<User> page) {
+	// String countSql = "select count(id) from sys_user where 1=1";
+	// String queryByPageSql = "select * from sys_user where 1=1";
+	//
+	// if (StringUtils.hasText(key)) {
+	// countSql += " and ((account like ?) or (name like ?) or (email like ?) or (phone like ?))";
+	// queryByPageSql += " and ((account like ?) or (name like ?) or (email like ?) or (phone like ?))";
+	// }
+	//
+	// queryByPageSql += " limit ?,?";
+	//
+	// String likeKey = super.filterKey(key);
+	// page.setTotal(super.getTotalCount(countSql, likeKey, likeKey, likeKey, likeKey));
+	// page.setRows(super.getJdbcTemplate().query(queryByPageSql, entityRowMapper, likeKey, likeKey, likeKey, likeKey,
+	// page.getStart(), page.getLimit()));
+	// return page;
+	// }
 }

@@ -1,5 +1,9 @@
 package com.duoduo.core.test;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -19,4 +23,25 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class BaseTest {
 
+	@Rule
+	public TestName name = new TestName();
+
+	public String getClassName() {
+		return getClass().getName();
+	}
+
+	public String getMethodName() {
+		return name.getMethodName();
+	}
+
+	@Before
+	public void before() {
+		System.out.println("-------------------------------------------------------------");
+		System.out.println("Test[" + getClassName() + "." + getMethodName() + "] start...");
+	}
+
+	@After
+	public void after() {
+		System.out.println("Test[" + getClassName() + "." + getMethodName() + "] end...");
+	}
 }

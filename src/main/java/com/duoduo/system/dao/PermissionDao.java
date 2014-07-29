@@ -129,11 +129,24 @@ public class PermissionDao extends BaseDao {
 	private static final String listAllSql = "select * from sys_permission";
 
 	/**
-	 * 获取用户的权限列表
+	 * 获取所有权限列表
 	 */
 	public List<Permission> listAll() {
 		try {
 			return super.getJdbcTemplate().query(listAllSql, entityRowMapper);
+		} catch (DataAccessException e) {
+		}
+		return null;
+	}
+
+	private static final String listByCategorySql = "select * from sys_permission where permission_category_id=?";
+
+	/**
+	 * 获取指定权限分类的权限列表
+	 */
+	public List<Permission> listByCategory(String permissionCategoryId) {
+		try {
+			return super.getJdbcTemplate().query(listByCategorySql, entityRowMapper, permissionCategoryId);
 		} catch (DataAccessException e) {
 		}
 		return null;
@@ -174,7 +187,28 @@ public class PermissionDao extends BaseDao {
 		params.put("limit", page.getLimit());
 
 		page.setTotal(super.getTotalCount(countSql, params));
-		page.setRows(super.getJdbcTemplate().query(queryByPageSql, entityRowMapper, params));
+		page.setRows(super.getNamedParameterJdbcTemplate().query(queryByPageSql, params, entityRowMapper));
 		return page;
 	}
+
+	// /**
+	// * 分页查询权限列表（模糊查询，条件为：权限名称）
+	// */
+	// public Page<Permission> pagingList(String name, Page<Permission> page) {
+	// String countSql = "select count(id) from sys_permission where 1=1";
+	// String queryByPageSql = "select * from sys_permission where 1=1";
+	//
+	// if (StringUtils.hasText(name)) {
+	// countSql += " and name like ?";
+	// queryByPageSql += " and name like ?";
+	// }
+	//
+	// queryByPageSql += " limit ?,?";
+	//
+	// String likeName = super.filterKeyPara(name);
+	// page.setTotal(super.getTotalCount(countSql, likeName));
+	// page.setRows(super.getJdbcTemplate().query(queryByPageSql, entityRowMapper, likeName, page.getStart(),
+	// page.getLimit()));
+	// return page;
+	// }
 }

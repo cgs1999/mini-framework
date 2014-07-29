@@ -36,7 +36,7 @@ public class UserRoleDao extends BaseDao {
 	/**
 	 * 根据用户Id获取用户角色关系
 	 */
-	public List<UserRole> listByUserd(String userId) {
+	public List<UserRole> listByUserId(String userId) {
 		try {
 			List<UserRole> result = super.getJdbcTemplate().query(listByUserIdSql, entityRowMapper, userId);
 			return result;
