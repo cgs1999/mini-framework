@@ -152,7 +152,7 @@ public class PermissionDao extends BaseDao {
 		return null;
 	}
 
-	private static final String listByUserIdSql = "select p.* from sys_permission p"
+	private static final String listByUserIdSql = "select distinct p.* from sys_permission p"
 			+ " left join sys_role_permission rp on rp.permission_id = p.id"
 			+ " left join sys_user_role ur on ur.role_id = rp.role_id" + " where ur.user_id = ?";
 

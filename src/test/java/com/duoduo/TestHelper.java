@@ -1,7 +1,10 @@
 package com.duoduo;
 
+import java.util.List;
+
 import com.duoduo.system.model.Permission;
 import com.duoduo.system.model.PermissionCategory;
+import com.duoduo.system.model.Resource;
 import com.duoduo.system.model.Role;
 import com.duoduo.system.model.User;
 
@@ -85,5 +88,91 @@ public class TestHelper {
 		permission.setName("删除记录");
 		permission.setPermissionCategoryId(permissionCategoryId);
 		return permission;
+	}
+
+	// 创建资源(根菜单)
+	public static Resource createMenuRoot() {
+		Resource resource = new Resource();
+		resource.setName("系统配置");
+		resource.setUrl("");
+		resource.setType("1");
+		resource.setParentId(null);
+		resource.setOrderIndex(0);
+		resource.setEnable(Boolean.TRUE);
+		return resource;
+	}
+
+	// 创建资源(菜单)1
+	public static Resource createMenu1(Long parentId) {
+		Resource resource = new Resource();
+		resource.setName("用户管理");
+		resource.setUrl("module/createRecord");
+		resource.setType("1");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(10);
+		resource.setEnable(Boolean.TRUE);
+		return resource;
+	}
+
+	// 创建资源(菜单)2
+	public static Resource createMenu2(Long parentId) {
+		Resource resource = new Resource();
+		resource.setName("角色管理");
+		resource.setUrl("module/deleteRecord");
+		resource.setType("1");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(20);
+		resource.setEnable(Boolean.TRUE);
+		return resource;
+	}
+
+	// 创建资源1
+	public static Resource createResource1(Long parentId) {
+		Resource resource = new Resource();
+		resource.setName("创建记录");
+		resource.setUrl("module/createRecord");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(1010);
+		resource.setEnable(Boolean.TRUE);
+		return resource;
+	}
+
+	// 创建资源2
+	public static Resource createResource2(Long parentId) {
+		Resource resource = new Resource();
+		resource.setName("删除记录");
+		resource.setUrl("module/deleteRecord");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(2010);
+		resource.setEnable(Boolean.TRUE);
+		return resource;
+	}
+
+	/**
+	 * 获取所有权限名称，结果以逗号分隔，例如：create,update,delete
+	 * @param permissionList
+	 * @return
+	 */
+	public static String getPermissionNames(List<Permission> permissionList) {
+		String ret = "";
+		for (Permission p : permissionList) {
+			ret += "," + p.getName();
+		}
+		return ret.substring(1);
+	}
+
+	/**
+	 * 获取所有资源名称，结果以逗号分隔，例如：create,update,delete
+	 * @param resourceList
+	 * @return
+	 */
+	public static String getResourceNames(List<Resource> resourceList) {
+		String ret = "";
+		for (Resource r : resourceList) {
+			ret += "," + r.getName();
+		}
+		return ret.substring(1);
 	}
 }

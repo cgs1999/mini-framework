@@ -14,7 +14,7 @@ import com.duoduo.system.manager.TestUserManager;
 import com.duoduo.system.manager.TestUserRoleManager;
 
 /**
- * TODO
+ * 测试System模块的Manager
  * @author chengesheng@gmail.com
  * @date 2014-7-21 下午4:52:24
  * @version 1.0.0

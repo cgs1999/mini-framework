@@ -54,7 +54,7 @@ public class ResourceDao extends BaseDao {
 	};
 
 	private static final String getByIdSql = "select r.*,r2.name as parentName from sys_resource r"
-			+ " left join sys_resourcer2 on r.parent_id=r2.id" + " where r.id=?";
+			+ " left join sys_resource r2 on r.parent_id=r2.id" + " where r.id=?";
 
 	/**
 	 * 根据Id获取资源
@@ -100,7 +100,7 @@ public class ResourceDao extends BaseDao {
 				ps.setString(count++, resource.getName());
 				ps.setString(count++, resource.getType());
 				ps.setString(count++, resource.getUrl());
-				ps.setLong(count++, resource.getParentId());
+				ps.setObject(count++, resource.getParentId());
 				ps.setString(count++, resource.getParentIds());
 				ps.setInt(count++, resource.getOrderIndex());
 				ps.setInt(count++, resource.getEnable() ? 1 : 0);
@@ -145,7 +145,7 @@ public class ResourceDao extends BaseDao {
 
 		if (StringUtils.hasText(name)) {
 			countSql += " and name like :likeName";
-			queryByPageSql += " and name like :likeName";
+			queryByPageSql += " and r.name like :likeName";
 		}
 
 		queryByPageSql += " limit :start,:limit";
@@ -182,7 +182,7 @@ public class ResourceDao extends BaseDao {
 	// return page;
 	// }
 
-	private static final String listByUserIdSql = "select r.* from sys_resource r"
+	private static final String listByUserIdSql = "select distinct r.* from sys_resource r"
 			+ " left join sys_permission_resource pr on pr.resource_id=r.id"
 			+ " left join sys_role_permission rp on rp.permission_id=pr.permission_id"
 			+ " left join sys_user_role ur on ur.role_id=rp.role_id" + " where ur.user_id = ?";
@@ -199,7 +199,7 @@ public class ResourceDao extends BaseDao {
 		return null;
 	}
 
-	private static final String listByRoleIdSql = "select r.* from sys_resource r"
+	private static final String listByRoleIdSql = "select distinct r.* from sys_resource r"
 			+ " left join sys_permission_resource pr on pr.resource_id=r.id"
 			+ " left join sys_role_permission rp on rp.permission_id=pr.permission_id" + " where rp.role_id = ?";
 
@@ -229,29 +229,41 @@ public class ResourceDao extends BaseDao {
 		return null;
 	}
 
-	private static final String listSubResourceSql = "select * from sys_resource where parentId=?";
+	private static final String listSubResourceSql = "select * from sys_resource where 1=1";
 
 	/**
 	 * 根据父Id获取下属资源
 	 */
 	public List<Resource> listSubResource(String parentId) {
 		try {
-			List<Resource> resources = super.getJdbcTemplate().query(listSubResourceSql, entityRowMapper, parentId);
+			String sql = listSubResourceSql;
+			if (parentId == null) {
+				sql += " and parent_id is ?";
+			} else {
+				sql += " and parent_id = ?";
+			}
+			List<Resource> resources = super.getJdbcTemplate().query(sql, entityRowMapper, parentId);
 			return resources;
 		} catch (DataAccessException e) {
 		}
 		return null;
 	}
 
-	private static final String listSubResourceByTypeSql = "select * from sys_resource where parentId=? and type=?";
+	private static final String listSubResourceByTypeSql = "select * from sys_resource where 1=1";
 
 	/**
 	 * 根据父Id获取下属资源
 	 */
 	public List<Resource> listSubResourceByType(String parentId, String type) {
 		try {
-			List<Resource> resources = super.getJdbcTemplate().query(listSubResourceByTypeSql, entityRowMapper,
-					parentId, type);
+			String sql = listSubResourceByTypeSql;
+			if (parentId == null) {
+				sql += " and parent_id is ?";
+			} else {
+				sql += " and parent_id = ?";
+			}
+			sql += " and type=?";
+			List<Resource> resources = super.getJdbcTemplate().query(sql, entityRowMapper, parentId, type);
 			return resources;
 		} catch (DataAccessException e) {
 		}

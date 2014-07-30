@@ -11,7 +11,7 @@ import com.duoduo.system.service.TestRoleService;
 import com.duoduo.system.service.TestUserService;
 
 /**
- * TODO
+ * 测试System模块的Service
  * @author chengesheng@gmail.com
  * @date 2014-7-21 下午4:31:35
  * @version 1.0.0

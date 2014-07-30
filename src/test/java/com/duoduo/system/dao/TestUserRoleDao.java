@@ -42,28 +42,24 @@ public class TestUserRoleDao extends BaseTest {
 	public void test10Create() {
 		// 创建用户1
 		User user = userDao.create(TestHelper.createUser1());
-
 		Assert.assertNotNull(user);
 		userId1 = user.getId();
 		System.out.println("userId1=" + userId1);
 
 		// 创建用户2
 		user = userDao.create(TestHelper.createUser2());
-
 		Assert.assertNotNull(user);
 		userId2 = user.getId();
 		System.out.println("userId2=" + userId2);
 
 		// 创建角色1
 		Role role = roleDao.create(TestHelper.createRole1());
-
 		Assert.assertNotNull(role);
 		roleId1 = role.getId();
 		System.out.println("roleId1=" + roleId1);
 
 		// 创建角色2
 		role = roleDao.create(TestHelper.createRole2());
-
 		Assert.assertNotNull(role);
 		roleId2 = role.getId();
 		System.out.println("roleId2=" + roleId2);
@@ -78,14 +74,12 @@ public class TestUserRoleDao extends BaseTest {
 		userRole = new UserRole();
 		userRole.setUserId(userId1);
 		userRole.setRoleId(roleId2);
-
 		Assert.assertTrue(userRoleDao.create(userRole));
 
 		// 创建用户角色关系3
 		userRole = new UserRole();
 		userRole.setUserId(userId2);
 		userRole.setRoleId(roleId2);
-
 		Assert.assertTrue(userRoleDao.create(userRole));
 	}
 
@@ -93,13 +87,11 @@ public class TestUserRoleDao extends BaseTest {
 	public void test20ListByUserId() {
 		// user1
 		List<UserRole> userRoleList = userRoleDao.listByUserId("" + userId1);
-
 		Assert.assertNotNull(userRoleList);
 		Assert.assertEquals(userRoleList.size(), 2);
 
 		// user2
 		userRoleList = userRoleDao.listByUserId("" + userId2);
-
 		Assert.assertNotNull(userRoleList);
 		Assert.assertEquals(userRoleList.size(), 1);
 	}
@@ -108,13 +100,11 @@ public class TestUserRoleDao extends BaseTest {
 	public void test22ListByRoleId() {
 		// role1
 		List<UserRole> userRoleList = userRoleDao.listByRoleId("" + roleId1);
-
 		Assert.assertNotNull(userRoleList);
 		Assert.assertEquals(userRoleList.size(), 1);
 
 		// role2
 		userRoleList = userRoleDao.listByRoleId("" + roleId2);
-
 		Assert.assertNotNull(userRoleList);
 		Assert.assertEquals(userRoleList.size(), 2);
 	}
@@ -125,7 +115,6 @@ public class TestUserRoleDao extends BaseTest {
 
 		// user1
 		List<UserRole> userRoleList = userRoleDao.listByUserId("" + userId1);
-
 		Assert.assertNotNull(userRoleList);
 		Assert.assertEquals(userRoleList.size(), 0);
 	}
@@ -136,7 +125,6 @@ public class TestUserRoleDao extends BaseTest {
 
 		// user1
 		List<UserRole> userRoleList = userRoleDao.listByRoleId("" + roleId2);
-
 		Assert.assertNotNull(userRoleList);
 		Assert.assertEquals(userRoleList.size(), 0);
 
