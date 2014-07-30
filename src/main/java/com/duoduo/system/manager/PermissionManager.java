@@ -3,7 +3,7 @@ package com.duoduo.system.manager;
 import java.util.List;
 
 import com.duoduo.core.vo.Page;
-import com.duoduo.system.vo.PermissionVO;
+import com.duoduo.system.model.Permission;
 
 /**
  * 权限管理业务处理接口
@@ -18,27 +18,27 @@ public interface PermissionManager {
 	 * @param id
 	 * @return
 	 */
-	public PermissionVO getById(String id);
+	public Permission getById(String id);
 
 	/**
 	 * 根据名称获取权限
 	 * @param name
 	 * @return
 	 */
-	public PermissionVO getByName(String name);
+	public Permission getByName(String name);
 
 	/**
 	 * 创建权限
-	 * @param permissionVO
+	 * @param permission
 	 * @return
 	 */
-	public PermissionVO create(final PermissionVO permissionVO);
+	public Permission create(final Permission permission);
 
 	/**
 	 * 修改权限
-	 * @param permissionVO
+	 * @param permission
 	 */
-	public void update(PermissionVO permissionVO);
+	public void update(Permission permission);
 
 	/**
 	 * 删除权限
@@ -51,13 +51,19 @@ public interface PermissionManager {
 	 * 获取所有权限列表
 	 * @return
 	 */
-	public List<PermissionVO> listAll();
+	public List<Permission> listAll();
 
 	/**
 	 * 根据用户id获取权限列表
 	 * @return
 	 */
-	public List<PermissionVO> listByUserId(String userId);
+	public List<Permission> listByUserId(String userId);
+
+	/**
+	 * 根据角色id获取权限列表
+	 * @return
+	 */
+	public List<Permission> listByRoleId(String roleId);
 
 	/**
 	 * 分页查询权限列表（模糊查询，条件为：名称）
@@ -65,5 +71,5 @@ public interface PermissionManager {
 	 * @param page
 	 * @return
 	 */
-	public Page<PermissionVO> pagingList(String name, Page<PermissionVO> page);
+	public Page<Permission> pagingList(String name, Page<Permission> page);
 }

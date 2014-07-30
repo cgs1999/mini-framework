@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.duoduo.core.vo.Page;
-import com.duoduo.system.dao.PermissionDao;
+import com.duoduo.system.manager.PermissionManager;
 import com.duoduo.system.model.Permission;
 import com.duoduo.system.vo.PermissionVO;
 
@@ -24,11 +24,11 @@ import com.duoduo.system.vo.PermissionVO;
 public class PermissionServiceImpl implements PermissionService {
 
 	@Resource
-	private PermissionDao permissionDao;
+	private PermissionManager permissionManager;
 
 	@Override
 	public PermissionVO getById(String id) {
-		Permission permission = permissionDao.getById(id);
+		Permission permission = permissionManager.getById(id);
 		if (permission == null) {
 			return null;
 		}
@@ -37,7 +37,7 @@ public class PermissionServiceImpl implements PermissionService {
 
 	@Override
 	public PermissionVO getByName(String name) {
-		Permission permission = permissionDao.getByName(name);
+		Permission permission = permissionManager.getByName(name);
 		if (permission == null) {
 			return null;
 		}
@@ -46,7 +46,7 @@ public class PermissionServiceImpl implements PermissionService {
 
 	@Override
 	public PermissionVO create(PermissionVO permissionVO) {
-		Permission permission = permissionDao.create(PermissionVO.toEntity(permissionVO));
+		Permission permission = permissionManager.create(PermissionVO.toEntity(permissionVO));
 		if (permission == null) {
 			return null;
 		}
@@ -55,27 +55,27 @@ public class PermissionServiceImpl implements PermissionService {
 
 	@Override
 	public void update(PermissionVO permissionVO) {
-		permissionDao.update(PermissionVO.toEntity(permissionVO));
+		permissionManager.update(PermissionVO.toEntity(permissionVO));
 	}
 
 	@Override
 	public boolean delete(String id) {
-		return permissionDao.delete(id);
+		return permissionManager.delete(id);
 	}
 
 	@Override
 	public List<PermissionVO> listAll() {
-		return fromEntityList(permissionDao.listAll());
+		return fromEntityList(permissionManager.listAll());
 	}
 
 	@Override
 	public List<PermissionVO> listByUserId(String userId) {
-		return fromEntityList(permissionDao.listByUserId(userId));
+		return fromEntityList(permissionManager.listByUserId(userId));
 	}
 
 	@Override
 	public Page<PermissionVO> pagingList(String name, Page<PermissionVO> page) {
-		Page<Permission> entityPage = permissionDao.pagingList(name, toEntityPage(page));
+		Page<Permission> entityPage = permissionManager.pagingList(name, toEntityPage(page));
 
 		return fromEntityPage(entityPage);
 	}

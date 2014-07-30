@@ -1,7 +1,7 @@
 package com.duoduo.system.manager;
 
 import com.duoduo.core.vo.Page;
-import com.duoduo.system.vo.UserVO;
+import com.duoduo.system.model.User;
 
 /**
  * 用户管理业务处理接口
@@ -16,27 +16,27 @@ public interface UserManager {
 	 * @param id
 	 * @return
 	 */
-	public UserVO getById(String id);
+	public User getById(String id);
 
 	/**
 	 * 根据帐号获取用户
 	 * @param account
 	 * @return
 	 */
-	public UserVO getByAccount(String account);
+	public User getByAccount(String account);
 
 	/**
 	 * 创建用户
-	 * @param userVO
+	 * @param user
 	 * @return
 	 */
-	public UserVO create(final UserVO userVO);
+	public User create(final User user);
 
 	/**
 	 * 修改用户
-	 * @param userVO
+	 * @param user
 	 */
-	public void update(UserVO userVO);
+	public void update(User user);
 
 	/**
 	 * 删除用户
@@ -54,5 +54,5 @@ public interface UserManager {
 	 * @param page
 	 * @return
 	 */
-	public Page<UserVO> pagingList(String account, String name, String email, String phone, Page<UserVO> page);
+	public Page<User> pagingList(String account, String name, String email, String phone, Page<User> page);
 }

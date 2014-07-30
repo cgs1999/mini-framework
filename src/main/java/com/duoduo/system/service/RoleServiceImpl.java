@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.duoduo.core.vo.Page;
-import com.duoduo.system.dao.RoleDao;
+import com.duoduo.system.manager.RoleManager;
 import com.duoduo.system.model.Role;
 import com.duoduo.system.vo.RoleVO;
 
@@ -24,11 +24,11 @@ import com.duoduo.system.vo.RoleVO;
 public class RoleServiceImpl implements RoleService {
 
 	@Resource
-	private RoleDao roleDao;
+	private RoleManager roleManager;
 
 	@Override
 	public RoleVO getById(String id) {
-		Role role = roleDao.getById(id);
+		Role role = roleManager.getById(id);
 		if (role == null) {
 			return null;
 		}
@@ -37,7 +37,7 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public RoleVO getByName(String name) {
-		Role role = roleDao.getByName(name);
+		Role role = roleManager.getByName(name);
 		if (role == null) {
 			return null;
 		}
@@ -46,7 +46,7 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public RoleVO create(RoleVO roleVO) {
-		Role role = roleDao.create(RoleVO.toEntity(roleVO));
+		Role role = roleManager.create(RoleVO.toEntity(roleVO));
 		if (role == null) {
 			return null;
 		}
@@ -55,27 +55,27 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public void update(RoleVO roleVO) {
-		roleDao.update(RoleVO.toEntity(roleVO));
+		roleManager.update(RoleVO.toEntity(roleVO));
 	}
 
 	@Override
 	public boolean delete(String id) {
-		return roleDao.delete(id);
+		return roleManager.delete(id);
 	}
 
 	@Override
 	public List<RoleVO> listAll() {
-		return fromEntityList(roleDao.listAll());
+		return fromEntityList(roleManager.listAll());
 	}
 
 	@Override
 	public List<RoleVO> listByUserId(String userId) {
-		return fromEntityList(roleDao.listByUserId(userId));
+		return fromEntityList(roleManager.listByUserId(userId));
 	}
 
 	@Override
 	public Page<RoleVO> pagingList(String name, Page<RoleVO> page) {
-		Page<Role> entityPage = roleDao.pagingList(name, toEntityPage(page));
+		Page<Role> entityPage = roleManager.pagingList(name, toEntityPage(page));
 
 		return fromEntityPage(entityPage);
 	}

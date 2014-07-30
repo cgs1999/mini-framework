@@ -167,6 +167,20 @@ public class PermissionDao extends BaseDao {
 		return null;
 	}
 
+	private static final String listByRoleIdSql = "select distinct p.* from sys_permission p"
+			+ " left join sys_role_permission rp on rp.permission_id = p.id" + " where rp.role_id = ?";
+
+	/**
+	 * 获取角色的权限列表
+	 */
+	public List<Permission> listByRoleId(String roleId) {
+		try {
+			return super.getJdbcTemplate().query(listByRoleIdSql, entityRowMapper, roleId);
+		} catch (DataAccessException e) {
+		}
+		return null;
+	}
+
 	/**
 	 * 分页查询权限列表（模糊查询，条件为：权限名称）
 	 */

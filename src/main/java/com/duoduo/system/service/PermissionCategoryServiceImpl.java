@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.duoduo.core.vo.Page;
-import com.duoduo.system.dao.PermissionCategoryDao;
+import com.duoduo.system.manager.PermissionCategoryManager;
 import com.duoduo.system.model.PermissionCategory;
 import com.duoduo.system.vo.PermissionCategoryVO;
 
@@ -24,11 +24,11 @@ import com.duoduo.system.vo.PermissionCategoryVO;
 public class PermissionCategoryServiceImpl implements PermissionCategoryService {
 
 	@Resource
-	private PermissionCategoryDao permissionCategoryDao;
+	private PermissionCategoryManager permissionCategoryManager;
 
 	@Override
 	public PermissionCategoryVO getById(String id) {
-		PermissionCategory permissionCategory = permissionCategoryDao.getById(id);
+		PermissionCategory permissionCategory = permissionCategoryManager.getById(id);
 		if (permissionCategory == null) {
 			return null;
 		}
@@ -37,7 +37,7 @@ public class PermissionCategoryServiceImpl implements PermissionCategoryService 
 
 	@Override
 	public PermissionCategoryVO getByName(String name) {
-		PermissionCategory permissionCategory = permissionCategoryDao.getByName(name);
+		PermissionCategory permissionCategory = permissionCategoryManager.getByName(name);
 		if (permissionCategory == null) {
 			return null;
 		}
@@ -46,7 +46,7 @@ public class PermissionCategoryServiceImpl implements PermissionCategoryService 
 
 	@Override
 	public PermissionCategoryVO create(PermissionCategoryVO permissionCategoryVO) {
-		PermissionCategory permissionCategory = permissionCategoryDao.create(PermissionCategoryVO
+		PermissionCategory permissionCategory = permissionCategoryManager.create(PermissionCategoryVO
 				.toEntity(permissionCategoryVO));
 		if (permissionCategory == null) {
 			return null;
@@ -56,22 +56,22 @@ public class PermissionCategoryServiceImpl implements PermissionCategoryService 
 
 	@Override
 	public void update(PermissionCategoryVO permissionCategoryVO) {
-		permissionCategoryDao.update(PermissionCategoryVO.toEntity(permissionCategoryVO));
+		permissionCategoryManager.update(PermissionCategoryVO.toEntity(permissionCategoryVO));
 	}
 
 	@Override
 	public boolean delete(String id) {
-		return permissionCategoryDao.delete(id);
+		return permissionCategoryManager.delete(id);
 	}
 
 	@Override
 	public List<PermissionCategoryVO> listAll() {
-		return fromEntityList(permissionCategoryDao.listAll());
+		return fromEntityList(permissionCategoryManager.listAll());
 	}
 
 	@Override
 	public Page<PermissionCategoryVO> pagingList(String name, Page<PermissionCategoryVO> page) {
-		Page<PermissionCategory> entityPage = permissionCategoryDao.pagingList(name, toEntityPage(page));
+		Page<PermissionCategory> entityPage = permissionCategoryManager.pagingList(name, toEntityPage(page));
 
 		return fromEntityPage(entityPage);
 	}

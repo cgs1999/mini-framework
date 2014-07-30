@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.duoduo.core.vo.Page;
-import com.duoduo.system.dao.UserDao;
+import com.duoduo.system.manager.UserManager;
 import com.duoduo.system.manager.UserRoleManager;
 import com.duoduo.system.model.User;
 import com.duoduo.system.vo.UserVO;
@@ -25,13 +25,13 @@ import com.duoduo.system.vo.UserVO;
 public class UserServiceImpl implements UserService {
 
 	@Resource
-	private UserDao userDao;
+	private UserManager userManager;
 	@Resource
 	private UserRoleManager userRoleManager;
 
 	@Override
 	public UserVO getById(String id) {
-		User user = userDao.getById(id);
+		User user = userManager.getById(id);
 		if (user == null) {
 			return null;
 		}
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserVO getByAccount(String account) {
-		User user = userDao.getByAccount(account);
+		User user = userManager.getByAccount(account);
 		if (user == null) {
 			return null;
 		}
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserVO create(UserVO userVO) {
-		User user = userDao.create(UserVO.toEntity(userVO));
+		User user = userManager.create(UserVO.toEntity(userVO));
 		if (user == null) {
 			return null;
 		}
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void update(UserVO userVO) {
-		userDao.update(UserVO.toEntity(userVO));
+		userManager.update(UserVO.toEntity(userVO));
 
 		// 更新用户角色关系
 		userRoleManager.saveOrUpdateUserRoles("" + userVO.getId(), userVO.getRoleIds());
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean delete(String id) {
-		boolean ret = userDao.delete(id);
+		boolean ret = userManager.delete(id);
 
 		// 删除用户角色关系
 		userRoleManager.deleteByUserId(id);
@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Page<UserVO> pagingList(String account, String name, String email, String phone, Page<UserVO> page) {
-		Page<User> entityPage = userDao.pagingList(account, name, email, phone, toEntityPage(page));
+		Page<User> entityPage = userManager.pagingList(account, name, email, phone, toEntityPage(page));
 
 		return fromEntityPage(entityPage);
 	}

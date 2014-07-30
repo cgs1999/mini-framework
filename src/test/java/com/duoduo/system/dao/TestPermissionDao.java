@@ -114,6 +114,56 @@ public class TestPermissionDao extends BaseTest {
 	}
 
 	@Test
+	public void test27ListByRoleId() {
+		// 创建角色1
+		Role role = roleDao.create(TestHelper.createRole1());
+		Assert.assertNotNull(role);
+		Long roleId1 = role.getId();
+		System.out.println("roleId1=" + roleId1);
+
+		// 创建角色2
+		role = roleDao.create(TestHelper.createRole2());
+		Assert.assertNotNull(role);
+		Long roleId2 = role.getId();
+		System.out.println("roleId2=" + roleId2);
+
+		// 创建角色权限关系1
+		RolePermission rolePermission = new RolePermission();
+		rolePermission.setRoleId(roleId1);
+		rolePermission.setPermissionId(entityId1);
+		Assert.assertTrue(rolePermissionDao.create(rolePermission));
+
+		// 创建角色权限关系2
+		rolePermission = new RolePermission();
+		rolePermission.setRoleId(roleId1);
+		rolePermission.setPermissionId(entityId2);
+		Assert.assertTrue(rolePermissionDao.create(rolePermission));
+
+		// 创建角色权限关系3
+		rolePermission = new RolePermission();
+		rolePermission.setRoleId(roleId2);
+		rolePermission.setPermissionId(entityId2);
+		Assert.assertTrue(rolePermissionDao.create(rolePermission));
+
+		List<Permission> permissionList = permissionDao.listByRoleId("" + roleId1);
+		Assert.assertNotNull(permissionList);
+		Assert.assertEquals(permissionList.size(), 2);
+		System.out.println("User1's permission[" + TestHelper.getPermissionNames(permissionList) + "]");
+
+		permissionList = permissionDao.listByRoleId("" + roleId2);
+		Assert.assertNotNull(permissionList);
+		Assert.assertEquals(permissionList.size(), 1);
+		System.out.println("User2's permission[" + TestHelper.getPermissionNames(permissionList) + "]");
+
+		roleDao.delete("" + roleId1);
+		roleDao.delete("" + roleId2);
+		rolePermissionDao.deleteByRoleId("" + roleId1);
+		rolePermissionDao.deleteByRoleId("" + roleId2);
+		rolePermissionDao.deleteByPermissionId("" + entityId1);
+		rolePermissionDao.deleteByPermissionId("" + entityId2);
+	}
+
+	@Test
 	public void test28ListByUserId() {
 		// 创建用户1
 		User user = userDao.create(TestHelper.createUser1());

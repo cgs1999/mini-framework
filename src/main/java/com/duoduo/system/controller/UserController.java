@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.duoduo.core.util.ResponseUtils;
 import com.duoduo.core.vo.Message;
 import com.duoduo.core.vo.Page;
-import com.duoduo.system.manager.RoleManager;
-import com.duoduo.system.manager.UserManager;
+import com.duoduo.system.service.RoleService;
+import com.duoduo.system.service.UserService;
 import com.duoduo.system.vo.RoleVO;
 import com.duoduo.system.vo.UserVO;
 
@@ -32,9 +32,9 @@ import com.duoduo.system.vo.UserVO;
 public class UserController {
 
 	@Resource
-	private UserManager userService;
+	private UserService userService;
 	@Resource
-	private RoleManager roleService;
+	private RoleService roleService;
 
 	private String listPage = "user/user-list";
 	private String formPage = "user/user-form";

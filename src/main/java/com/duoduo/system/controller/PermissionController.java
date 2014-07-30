@@ -17,32 +17,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.duoduo.core.util.ResponseUtils;
 import com.duoduo.core.vo.Message;
 import com.duoduo.core.vo.Page;
-import com.duoduo.system.Constants;
+import com.duoduo.system.service.PermissionService;
 import com.duoduo.system.service.ResourceService;
-import com.duoduo.system.service.RoleService;
+import com.duoduo.system.vo.PermissionVO;
 import com.duoduo.system.vo.ResourceVO;
-import com.duoduo.system.vo.RoleVO;
 
 /**
- * 角色Controller
+ * 权限Controller
  * @author chengesheng
  * @date 2014-3-19 下午6:13:00
  */
 @Controller
-@RequestMapping("/system/role")
-public class RoleController {
+@RequestMapping("/system/permission")
+public class PermissionController {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Resource
-	private RoleService roleService;
+	private PermissionService PermissionService;
 	@Resource
 	private ResourceService resourceService;
 
-	private String listPage = "role/role-list";
-	private String formPage = "role/role-form";
-	private String readPage = "role/role-read";
-	private String selectFromAllPage = "role/selectFromAllRole";
+	private String listPage = "permission/permission-list";
+	private String formPage = "permission/permission-form";
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(ModelMap model) {
@@ -56,52 +53,43 @@ public class RoleController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String form(ModelMap model, @PathVariable String id) {
-		RoleVO roleVO = roleService.getById(id);
+		PermissionVO permissionVO = PermissionService.getById(id);
 
 		// 设置菜单信息
-		String menuIds = "";
-		String menuNames = "";
-		List<ResourceVO> menus = resourceService.listByRoleId("" + roleVO.getId());
+		String resourceIds = "";
+		String resourceNames = "";
+		List<ResourceVO> menus = resourceService.listByPermissionId("" + permissionVO.getId());
 		for (ResourceVO menu : menus) {
-			menuIds += "," + menu.getId();
-			menuNames += "," + menu.getName();
+			resourceIds += "," + menu.getId();
+			resourceNames += "," + menu.getName();
 		}
 		// 处理前面多余的","
-		if (!"".equals(menuIds)) {
-			roleVO.setResourceIds(menuIds.substring(1));
-			roleVO.setResourceNames(menuNames.substring(1));
+		if (!"".equals(resourceIds)) {
+			permissionVO.setResourceIds(resourceIds.substring(1));
+			permissionVO.setResourceNames(resourceNames.substring(1));
 		}
 
-		model.addAttribute("data", roleVO);
+		model.addAttribute("data", permissionVO);
 
-		if (Constants.SYSTEM_ROLE.equals(roleVO.getType())) {
-			return readPage;
-		} else {
-			return formPage;
-		}
-	}
-
-	@RequestMapping(value = "/selectFromAllRole", method = RequestMethod.GET)
-	public String selectFromAllRole(ModelMap model) {
-		return selectFromAllPage;
+		return formPage;
 	}
 
 	@RequestMapping(value = "/getPageList", method = RequestMethod.POST)
-	public void getPageList(HttpServletResponse response, Page<RoleVO> page,
+	public void getPageList(HttpServletResponse response, Page<PermissionVO> page,
 			@RequestParam(value = "name", required = false) String name) {
-		page = roleService.pagingList(name, page);
+		page = PermissionService.pagingList(name, page);
 		ResponseUtils.renderJson(response, page);
 	}
 
 	@RequestMapping(value = "/listAll", method = RequestMethod.POST)
 	public void listAll(HttpServletResponse response) {
-		List<RoleVO> roles = roleService.listAll();
-		ResponseUtils.renderJson(response, roles);
+		List<PermissionVO> permissions = PermissionService.listAll();
+		ResponseUtils.renderJson(response, permissions);
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public void save(HttpServletResponse response, RoleVO roleVO) {
-		ResponseUtils.renderJson(response, save(roleVO));
+	public void save(HttpServletResponse response, PermissionVO permissionVO) {
+		ResponseUtils.renderJson(response, save(permissionVO));
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
@@ -109,24 +97,24 @@ public class RoleController {
 		ResponseUtils.renderJson(response, delete(id));
 	}
 
-	private Message<String> save(RoleVO roleVO) {
+	private Message<String> save(PermissionVO permissionVO) {
 		Message<String> message = new Message<String>(true, "保存成功");
 
 		try {
 			int nResult = -1;
-			if (roleVO != null) {
+			if (permissionVO != null) {
 				// 校验角色名称
-				RoleVO vo = roleService.getByName(roleVO.getName());
-				if (vo != null && !roleVO.equals(vo)) {
+				PermissionVO vo = PermissionService.getByName(permissionVO.getName());
+				if (vo != null && !permissionVO.equals(vo)) {
 					message.setSuccess(false);
 					message.setDescription("角色名称已存在");
 					return message;
 				}
 
-				if (roleVO.getId() == null) {
-					roleService.create(roleVO);
+				if (permissionVO.getId() == null) {
+					PermissionService.create(permissionVO);
 				} else {
-					roleService.update(roleVO);
+					PermissionService.update(permissionVO);
 				}
 			}
 
@@ -155,7 +143,7 @@ public class RoleController {
 		Message<String> message = new Message<String>(true, "删除成功");
 
 		try {
-			boolean ret = roleService.delete(id);
+			boolean ret = PermissionService.delete(id);
 			if (!ret) {
 				message.setSuccess(false);
 				message.setDescription("删除失败，请联系管理员!");

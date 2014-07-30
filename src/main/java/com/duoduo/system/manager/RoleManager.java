@@ -3,7 +3,7 @@ package com.duoduo.system.manager;
 import java.util.List;
 
 import com.duoduo.core.vo.Page;
-import com.duoduo.system.vo.RoleVO;
+import com.duoduo.system.model.Role;
 
 /**
  * 角色管理业务处理接口
@@ -18,27 +18,27 @@ public interface RoleManager {
 	 * @param id
 	 * @return
 	 */
-	public RoleVO getById(String id);
+	public Role getById(String id);
 
 	/**
 	 * 根据名称获取角色
 	 * @param name
 	 * @return
 	 */
-	public RoleVO getByName(String name);
+	public Role getByName(String name);
 
 	/**
 	 * 创建角色
-	 * @param roleVO
+	 * @param role
 	 * @return
 	 */
-	public RoleVO create(final RoleVO roleVO);
+	public Role create(final Role role);
 
 	/**
 	 * 修改角色
-	 * @param roleVO
+	 * @param role
 	 */
-	public void update(RoleVO roleVO);
+	public void update(Role role);
 
 	/**
 	 * 删除角色
@@ -51,13 +51,13 @@ public interface RoleManager {
 	 * 根据所有角色列表
 	 * @return
 	 */
-	public List<RoleVO> listAll();
+	public List<Role> listAll();
 
 	/**
 	 * 根据用户id获取角色列表
 	 * @return
 	 */
-	public List<RoleVO> listByUserId(String userId);
+	public List<Role> listByUserId(String userId);
 
 	/**
 	 * 分页查询角色列表（模糊查询，条件为：名称）
@@ -65,5 +65,5 @@ public interface RoleManager {
 	 * @param page
 	 * @return
 	 */
-	public Page<RoleVO> pagingList(String name, Page<RoleVO> page);
+	public Page<Role> pagingList(String name, Page<Role> page);
 }

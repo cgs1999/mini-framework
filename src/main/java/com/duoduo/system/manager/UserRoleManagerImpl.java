@@ -3,7 +3,6 @@ package com.duoduo.system.manager;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.duoduo.system.dao.UserRoleDao;
@@ -15,7 +14,6 @@ import com.duoduo.system.model.UserRole;
  * @date 2014-6-3 上午1:54:15
  * @version 1.0.0
  */
-@Transactional
 @Service("userRoleManager")
 public class UserRoleManagerImpl implements UserRoleManager {
 

@@ -100,7 +100,7 @@ public class TestResourceDao extends BaseTest {
 	}
 
 	@Test
-	public void test22GetByName() {
+	public void test21GetByName() {
 		Resource resource = resourceDao.getByName("创建记录");
 		Assert.assertNotNull(resource);
 		Assert.assertEquals(resource.getName(), "创建记录");
@@ -111,7 +111,75 @@ public class TestResourceDao extends BaseTest {
 	}
 
 	@Test
-	public void test23ListByRoleId() {
+	public void test22ListByType() {
+		List<Resource> resourceList = resourceDao.listByType("1");
+		Assert.assertNotNull(resourceList);
+		Assert.assertEquals(resourceList.size(), 3);
+
+		resourceList = resourceDao.listByType("2");
+		Assert.assertNotNull(resourceList);
+		Assert.assertEquals(resourceList.size(), 2);
+	}
+
+	@Test
+	public void test23ListByPermissionId() {
+		// 创建权限分类
+		PermissionCategory permissionCategory = permissionCategoryDao.create(TestHelper.createPermissionCategory1());
+		Assert.assertNotNull(permissionCategory);
+		Long categoryId = permissionCategory.getId();
+		System.out.println("categoryId=" + categoryId);
+
+		// 创建权限1
+		Permission permission = permissionDao.create(TestHelper.createPermission1(categoryId));
+		Assert.assertNotNull(permission);
+		Long permissionId1 = permission.getId();
+		System.out.println("permissionId1=" + permissionId1);
+
+		// 创建权限2
+		permission = permissionDao.create(TestHelper.createPermission2(categoryId));
+		Assert.assertNotNull(permission);
+		Long permissionId2 = permission.getId();
+		System.out.println("permissionId2=" + permissionId2);
+
+		// 创建权限资源关系1
+		PermissionResource permissionResource = new PermissionResource();
+		permissionResource.setPermissionId(permissionId1);
+		permissionResource.setResourceId(entityId1);
+		Assert.assertTrue(permissionResourceDao.create(permissionResource));
+
+		// 创建权限资源关系2
+		permissionResource = new PermissionResource();
+		permissionResource.setPermissionId(permissionId1);
+		permissionResource.setResourceId(entityId2);
+		Assert.assertTrue(permissionResourceDao.create(permissionResource));
+
+		// 创建权限资源关系3
+		permissionResource = new PermissionResource();
+		permissionResource.setPermissionId(permissionId2);
+		permissionResource.setResourceId(entityId2);
+		Assert.assertTrue(permissionResourceDao.create(permissionResource));
+
+		List<Resource> resourceList = resourceDao.listByPermissionId("" + permissionId1);
+		Assert.assertNotNull(resourceList);
+		Assert.assertEquals(resourceList.size(), 2);
+		System.out.println("Role1's resource[" + TestHelper.getResourceNames(resourceList) + "]");
+
+		resourceList = resourceDao.listByPermissionId("" + permissionId2);
+		Assert.assertNotNull(resourceList);
+		Assert.assertEquals(resourceList.size(), 1);
+		System.out.println("Role2's resource[" + TestHelper.getResourceNames(resourceList) + "]");
+
+		permissionCategoryDao.delete("" + categoryId);
+		permissionDao.delete("" + permissionId1);
+		permissionDao.delete("" + permissionId2);
+		permissionResourceDao.deleteByPermissionId("" + permissionId1);
+		permissionResourceDao.deleteByPermissionId("" + permissionId2);
+		permissionResourceDao.deleteByResourceId("" + entityId1);
+		permissionResourceDao.deleteByResourceId("" + entityId2);
+	}
+
+	@Test
+	public void test24ListByRoleId() {
 		// 创建角色1
 		Role role = roleDao.create(TestHelper.createRole1());
 		Assert.assertNotNull(role);
@@ -194,23 +262,13 @@ public class TestResourceDao extends BaseTest {
 		rolePermissionDao.deleteByRoleId("" + roleId2);
 		rolePermissionDao.deleteByPermissionId("" + permissionId1);
 		rolePermissionDao.deleteByPermissionId("" + permissionId2);
+		permissionCategoryDao.delete("" + categoryId);
 		permissionDao.delete("" + permissionId1);
 		permissionDao.delete("" + permissionId2);
 		permissionResourceDao.deleteByPermissionId("" + permissionId1);
 		permissionResourceDao.deleteByPermissionId("" + permissionId2);
 		permissionResourceDao.deleteByResourceId("" + entityId1);
 		permissionResourceDao.deleteByResourceId("" + entityId2);
-	}
-
-	@Test
-	public void test24ListByType() {
-		List<Resource> resourceList = resourceDao.listByType("1");
-		Assert.assertNotNull(resourceList);
-		Assert.assertEquals(resourceList.size(), 3);
-
-		resourceList = resourceDao.listByType("2");
-		Assert.assertNotNull(resourceList);
-		Assert.assertEquals(resourceList.size(), 2);
 	}
 
 	@Test
@@ -333,6 +391,7 @@ public class TestResourceDao extends BaseTest {
 		rolePermissionDao.deleteByRoleId("" + roleId2);
 		rolePermissionDao.deleteByPermissionId("" + permissionId1);
 		rolePermissionDao.deleteByPermissionId("" + permissionId2);
+		permissionCategoryDao.delete("" + categoryId);
 		permissionDao.delete("" + permissionId1);
 		permissionDao.delete("" + permissionId2);
 		permissionResourceDao.deleteByPermissionId("" + permissionId1);
@@ -362,7 +421,11 @@ public class TestResourceDao extends BaseTest {
 
 	@Test
 	public void test27ListSubResourceByType() {
-		List<Resource> resourceList = resourceDao.listSubResourceByType("" + rootId, "1");
+		List<Resource> resourceList = resourceDao.listSubResourceByType(null, "1");
+		Assert.assertNotNull(resourceList);
+		Assert.assertEquals(resourceList.size(), 1);
+
+		resourceList = resourceDao.listSubResourceByType("" + rootId, "1");
 		Assert.assertNotNull(resourceList);
 		Assert.assertEquals(resourceList.size(), 2);
 

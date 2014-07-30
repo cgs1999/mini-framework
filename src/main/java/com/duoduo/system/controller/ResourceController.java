@@ -22,7 +22,7 @@ import com.duoduo.core.vo.EasyUiTreeNode;
 import com.duoduo.core.vo.Message;
 import com.duoduo.core.vo.Page;
 import com.duoduo.system.Constants;
-import com.duoduo.system.manager.ResourceManager;
+import com.duoduo.system.service.ResourceService;
 import com.duoduo.system.vo.ResourceVO;
 
 /**
@@ -37,7 +37,7 @@ public class ResourceController {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Resource
-	private ResourceManager resourceService;
+	private ResourceService resourceService;
 
 	private String listPage = "menu/menu-list";
 	private String formPage = "menu/menu-form";

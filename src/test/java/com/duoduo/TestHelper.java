@@ -36,7 +36,7 @@ public class TestHelper {
 		user.setEmail("jason@126.com");
 		user.setPhone("15912345678");
 		user.setPassword("888888");
-		user.setStatus(1);
+		user.setStatus(0);
 		return user;
 	}
 
@@ -55,7 +55,7 @@ public class TestHelper {
 		Role role = new Role();
 		role.setName("user");
 		role.setType("1");
-		role.setEnable(Boolean.TRUE);
+		role.setEnable(Boolean.FALSE);
 		role.setMemo("普通用户");
 		return role;
 	}
@@ -122,7 +122,7 @@ public class TestHelper {
 		resource.setType("1");
 		resource.setParentId(parentId);
 		resource.setOrderIndex(20);
-		resource.setEnable(Boolean.TRUE);
+		resource.setEnable(Boolean.FALSE);
 		return resource;
 	}
 
@@ -146,7 +146,7 @@ public class TestHelper {
 		resource.setType("2");
 		resource.setParentId(parentId);
 		resource.setOrderIndex(2010);
-		resource.setEnable(Boolean.TRUE);
+		resource.setEnable(Boolean.FALSE);
 		return resource;
 	}
 

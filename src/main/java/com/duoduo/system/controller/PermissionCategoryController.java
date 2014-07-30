@@ -30,7 +30,7 @@ import com.duoduo.system.vo.RoleVO;
  */
 @Controller
 @RequestMapping("/system/role")
-public class RoleController {
+public class PermissionCategoryController {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 

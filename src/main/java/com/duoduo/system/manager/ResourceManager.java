@@ -3,7 +3,7 @@ package com.duoduo.system.manager;
 import java.util.List;
 
 import com.duoduo.core.vo.Page;
-import com.duoduo.system.vo.ResourceVO;
+import com.duoduo.system.model.Resource;
 
 /**
  * 资源管理业务处理接口
@@ -18,27 +18,27 @@ public interface ResourceManager {
 	 * @param id
 	 * @return
 	 */
-	public ResourceVO getById(String id);
+	public Resource getById(String id);
 
 	/**
 	 * 根据名称获取资源
 	 * @param name
 	 * @return
 	 */
-	public ResourceVO getByName(String name);
+	public Resource getByName(String name);
 
 	/**
 	 * 创建资源
-	 * @param resourceVO
+	 * @param resource
 	 * @return
 	 */
-	public ResourceVO create(final ResourceVO resourceVO);
+	public Resource create(final Resource resource);
 
 	/**
 	 * 修改资源
-	 * @param resourceVO
+	 * @param resource
 	 */
-	public void update(ResourceVO resourceVO);
+	public void update(Resource resource);
 
 	/**
 	 * 删除资源
@@ -53,42 +53,42 @@ public interface ResourceManager {
 	 * @param page
 	 * @return
 	 */
-	public Page<ResourceVO> pagingList(String name, Page<ResourceVO> page);
+	public Page<Resource> pagingList(String name, Page<Resource> page);
 
 	/**
 	 * 获取用户所拥有的资源
 	 * @return
 	 */
-	public List<ResourceVO> listByUserId(String userId);
+	public List<Resource> listByUserId(String userId);
 
 	/**
 	 * 根据角色编号获取资源
 	 * @param roleId
 	 */
-	public List<ResourceVO> listByRoleId(String roleId);
+	public List<Resource> listByRoleId(String roleId);
+
+	/**
+	 * 根据权限编号获取资源
+	 * @param permissionId
+	 */
+	public List<Resource> listByPermissionId(String permissionId);
 
 	/**
 	 * 根据父资源编号获取所属子资源
 	 * @param parentId
 	 * @return
 	 */
-	public List<ResourceVO> listSubResource(String parentId);
-
-	/**
-	 * 获取所有菜单，用于主界面显示菜单，特别需要注意：返回的VO只有id,parentId,name,url
-	 * @return
-	 */
-	public List<ResourceVO> listAllMenuSimple();
+	public List<Resource> listSubResource(String parentId);
 
 	/**
 	 * 获取所有菜单
 	 * @return
 	 */
-	public List<ResourceVO> listAllMenu();
+	public List<Resource> listAllMenu();
 
 	/**
 	 * 获取所有一级菜单
 	 * @return
 	 */
-	public List<ResourceVO> listRootMenu();
+	public List<Resource> listRootMenu();
 }

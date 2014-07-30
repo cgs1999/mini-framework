@@ -68,6 +68,12 @@ public interface ResourceService {
 	public List<ResourceVO> listByRoleId(String roleId);
 
 	/**
+	 * 根据权限编号获取资源
+	 * @param permissionId
+	 */
+	public List<ResourceVO> listByPermissionId(String permissionId);
+
+	/**
 	 * 根据父资源编号获取所属子资源
 	 * @param parentId
 	 * @return

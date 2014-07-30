@@ -215,6 +215,22 @@ public class ResourceDao extends BaseDao {
 		return null;
 	}
 
+	private static final String listByPermissionIdSql = "select distinct r.* from sys_resource r"
+			+ " left join sys_permission_resource pr on pr.resource_id=r.id" + " where pr.permission_id = ?";
+
+	/**
+	 * 根据权限Id获取资源
+	 */
+	public List<Resource> listByPermissionId(String permissionId) {
+		try {
+			List<Resource> resources = super.getJdbcTemplate().query(listByPermissionIdSql, entityRowMapper,
+					permissionId);
+			return resources;
+		} catch (DataAccessException e) {
+		}
+		return null;
+	}
+
 	private static final String listByTypeSql = "select * from sys_resource where type=?";
 
 	/**

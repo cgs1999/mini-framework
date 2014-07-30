@@ -7,8 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.duoduo.core.vo.Page;
-import com.duoduo.system.Constants;
-import com.duoduo.system.dao.ResourceDao;
+import com.duoduo.system.manager.ResourceManager;
 import com.duoduo.system.model.Resource;
 import com.duoduo.system.vo.ResourceVO;
 
@@ -22,14 +21,12 @@ import com.duoduo.system.vo.ResourceVO;
 @Service("resourceService")
 public class ResourceServiceImpl implements ResourceService {
 
-	private static final String TYPE_MENU = "1";
-
 	@javax.annotation.Resource
-	private ResourceDao resourceDao;
+	private ResourceManager resourceManager;
 
 	@Override
 	public ResourceVO getById(String id) {
-		Resource resource = resourceDao.getById(id);
+		Resource resource = resourceManager.getById(id);
 		if (resource == null) {
 			return null;
 		}
@@ -38,7 +35,7 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Override
 	public ResourceVO getByName(String name) {
-		Resource resource = resourceDao.getByName(name);
+		Resource resource = resourceManager.getByName(name);
 		if (resource == null) {
 			return null;
 		}
@@ -47,7 +44,7 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Override
 	public ResourceVO create(ResourceVO resourceVO) {
-		Resource resource = resourceDao.create(ResourceVO.toEntity(resourceVO));
+		Resource resource = resourceManager.create(ResourceVO.toEntity(resourceVO));
 		if (resource == null) {
 			return null;
 		}
@@ -56,49 +53,54 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Override
 	public void update(ResourceVO resourceVO) {
-		resourceDao.update(ResourceVO.toEntity(resourceVO));
+		resourceManager.update(ResourceVO.toEntity(resourceVO));
 	}
 
 	@Override
 	public boolean delete(String id) {
-		return resourceDao.delete(id);
+		return resourceManager.delete(id);
 	}
 
 	@Override
 	public Page<ResourceVO> pagingList(String name, Page<ResourceVO> page) {
-		Page<Resource> entityPage = resourceDao.pagingList(name, toEntityPage(page));
+		Page<Resource> entityPage = resourceManager.pagingList(name, toEntityPage(page));
 
 		return fromEntityPage(entityPage);
 	}
 
 	@Override
 	public List<ResourceVO> listByUserId(String userId) {
-		return fromEntityList(resourceDao.listByUserId(userId));
+		return fromEntityList(resourceManager.listByUserId(userId));
 	}
 
 	@Override
 	public List<ResourceVO> listByRoleId(String roleId) {
-		return fromEntityList(resourceDao.listByRoleId(roleId));
+		return fromEntityList(resourceManager.listByRoleId(roleId));
+	}
+
+	@Override
+	public List<ResourceVO> listByPermissionId(String permissionId) {
+		return fromEntityList(resourceManager.listByPermissionId(permissionId));
 	}
 
 	@Override
 	public List<ResourceVO> listSubResource(String parentId) {
-		return fromEntityList(resourceDao.listSubResource(parentId));
+		return fromEntityList(resourceManager.listSubResource(parentId));
 	}
 
 	@Override
 	public List<ResourceVO> listAllMenuSimple() {
-		return toSimpleList(resourceDao.listByType(TYPE_MENU));
+		return toSimpleList(resourceManager.listAllMenu());
 	}
 
 	@Override
 	public List<ResourceVO> listAllMenu() {
-		return fromEntityList(resourceDao.listByType(TYPE_MENU));
+		return fromEntityList(resourceManager.listAllMenu());
 	}
 
 	@Override
 	public List<ResourceVO> listRootMenu() {
-		return fromEntityList(resourceDao.listSubResourceByType("" + Constants.ROOT_MENU_ID, TYPE_MENU));
+		return fromEntityList(resourceManager.listRootMenu());
 	}
 
 	/**
