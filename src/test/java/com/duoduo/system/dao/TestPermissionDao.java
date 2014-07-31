@@ -147,12 +147,12 @@ public class TestPermissionDao extends BaseTest {
 		List<Permission> permissionList = permissionDao.listByRoleId("" + roleId1);
 		Assert.assertNotNull(permissionList);
 		Assert.assertEquals(permissionList.size(), 2);
-		System.out.println("User1's permission[" + TestHelper.getPermissionNames(permissionList) + "]");
+		System.out.println("User1's permission[" + TestHelper.getEntityListNames(permissionList) + "]");
 
 		permissionList = permissionDao.listByRoleId("" + roleId2);
 		Assert.assertNotNull(permissionList);
 		Assert.assertEquals(permissionList.size(), 1);
-		System.out.println("User2's permission[" + TestHelper.getPermissionNames(permissionList) + "]");
+		System.out.println("User2's permission[" + TestHelper.getEntityListNames(permissionList) + "]");
 
 		roleDao.delete("" + roleId1);
 		roleDao.delete("" + roleId2);
@@ -227,12 +227,12 @@ public class TestPermissionDao extends BaseTest {
 		List<Permission> permissionList = permissionDao.listByUserId("" + userId1);
 		Assert.assertNotNull(permissionList);
 		Assert.assertEquals(permissionList.size(), 2);
-		System.out.println("User1's permission[" + TestHelper.getPermissionNames(permissionList) + "]");
+		System.out.println("User1's permission[" + TestHelper.getEntityListNames(permissionList) + "]");
 
 		permissionList = permissionDao.listByUserId("" + userId2);
 		Assert.assertNotNull(permissionList);
 		Assert.assertEquals(permissionList.size(), 1);
-		System.out.println("User2's permission[" + TestHelper.getPermissionNames(permissionList) + "]");
+		System.out.println("User2's permission[" + TestHelper.getEntityListNames(permissionList) + "]");
 
 		userDao.delete("" + userId1);
 		userDao.delete("" + userId2);

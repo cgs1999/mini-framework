@@ -4,9 +4,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import com.duoduo.system.manager.TestPermissionCategoryManager;
 import com.duoduo.system.manager.TestPermissionManager;
 import com.duoduo.system.manager.TestPermissionResourceManager;
-import com.duoduo.system.manager.TestPerssiomCategoryManager;
 import com.duoduo.system.manager.TestResourceManager;
 import com.duoduo.system.manager.TestRoleManager;
 import com.duoduo.system.manager.TestRolePermissionManager;
@@ -21,7 +21,7 @@ import com.duoduo.system.manager.TestUserRoleManager;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-		TestUserManager.class, TestRoleManager.class, TestPerssiomCategoryManager.class, TestPermissionManager.class,
+		TestUserManager.class, TestRoleManager.class, TestPermissionCategoryManager.class, TestPermissionManager.class,
 		TestResourceManager.class, TestUserRoleManager.class, TestRolePermissionManager.class,
 		TestPermissionResourceManager.class
 })

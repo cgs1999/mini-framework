@@ -12,30 +12,16 @@ import com.duoduo.system.model.Role;
  */
 public class RoleVO extends BaseVO {
 
-	/** 角色名称 */
-	private String name;
 	/** 角色类型，系统和自定义 */
 	private String type;
 	/** 启停状态 */
 	private Boolean enable;
 	/** 备注 */
 	private String memo;
-	/** 创建时间 */
-	private String createTime;
-	/** 最后更新时间 */
-	private String updateTime;
 
-	// 资源信息
-	private String resourceIds;
-	private String resourceNames;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	// 权限信息
+	private String permissionIds;
+	private String permissionNames;
 
 	public String getType() {
 		return type;
@@ -61,36 +47,20 @@ public class RoleVO extends BaseVO {
 		this.memo = memo;
 	}
 
-	public String getCreateTime() {
-		return createTime;
+	public String getPermissionIds() {
+		return permissionIds;
 	}
 
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
+	public void setPermissionIds(String permissionIds) {
+		this.permissionIds = permissionIds;
 	}
 
-	public String getUpdateTime() {
-		return updateTime;
+	public String getPermissionNames() {
+		return permissionNames;
 	}
 
-	public void setUpdateTime(String updateTime) {
-		this.updateTime = updateTime;
-	}
-
-	public String getResourceIds() {
-		return resourceIds;
-	}
-
-	public void setResourceIds(String resourceIds) {
-		this.resourceIds = resourceIds;
-	}
-
-	public String getResourceNames() {
-		return resourceNames;
-	}
-
-	public void setResourceNames(String resourceNames) {
-		this.resourceNames = resourceNames;
+	public void setPermissionNames(String permissionNames) {
+		this.permissionNames = permissionNames;
 	}
 
 	/**

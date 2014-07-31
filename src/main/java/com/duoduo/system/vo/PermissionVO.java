@@ -12,30 +12,16 @@ import com.duoduo.system.model.Permission;
  */
 public class PermissionVO extends BaseVO {
 
-	/** 权限名称 */
-	private String name;
 	/** 权限分类Id */
 	private Long permissionCategoryId;
 	/** 权限分类名称 */
 	private String permissionCategoryName;
 	/** 备注 */
 	private String memo;
-	/** 创建时间 */
-	private String createTime;
-	/** 最后更新时间 */
-	private String updateTime;
 
 	// 资源信息
 	private String resourceIds;
 	private String resourceNames;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public Long getPermissionCategoryId() {
 		return permissionCategoryId;
@@ -59,22 +45,6 @@ public class PermissionVO extends BaseVO {
 
 	public void setMemo(String memo) {
 		this.memo = memo;
-	}
-
-	public String getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
-	}
-
-	public String getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(String updateTime) {
-		this.updateTime = updateTime;
 	}
 
 	public String getResourceIds() {

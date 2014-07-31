@@ -54,10 +54,22 @@ public interface PermissionService {
 	public List<PermissionVO> listAll();
 
 	/**
+	 * 根据权限分类id获取权限列表
+	 * @return
+	 */
+	public List<PermissionVO> listByCategory(String categoryId);
+
+	/**
 	 * 根据用户id获取权限列表
 	 * @return
 	 */
 	public List<PermissionVO> listByUserId(String userId);
+
+	/**
+	 * 根据角色id获取权限列表
+	 * @return
+	 */
+	public List<PermissionVO> listByRoleId(String roleId);
 
 	/**
 	 * 分页查询权限列表（模糊查询，条件为：名称）

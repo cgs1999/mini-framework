@@ -14,8 +14,6 @@ public class User extends IdEntity {
 
 	/** 帐号 */
 	private String account;
-	/** 姓名 */
-	private String name;
 	/** 密码 */
 	private String password;
 	/** 加密私钥 */
@@ -33,14 +31,6 @@ public class User extends IdEntity {
 
 	public void setAccount(String account) {
 		this.account = account;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getPassword() {

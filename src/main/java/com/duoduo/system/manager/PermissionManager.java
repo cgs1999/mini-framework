@@ -54,6 +54,12 @@ public interface PermissionManager {
 	public List<Permission> listAll();
 
 	/**
+	 * 根据权限分类id获取权限列表
+	 * @return
+	 */
+	public List<Permission> listByCategory(String categoryId);
+
+	/**
 	 * 根据用户id获取权限列表
 	 * @return
 	 */

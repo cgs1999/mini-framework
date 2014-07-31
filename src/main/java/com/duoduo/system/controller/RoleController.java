@@ -18,9 +18,9 @@ import com.duoduo.core.util.ResponseUtils;
 import com.duoduo.core.vo.Message;
 import com.duoduo.core.vo.Page;
 import com.duoduo.system.Constants;
-import com.duoduo.system.service.ResourceService;
+import com.duoduo.system.service.PermissionService;
 import com.duoduo.system.service.RoleService;
-import com.duoduo.system.vo.ResourceVO;
+import com.duoduo.system.vo.PermissionVO;
 import com.duoduo.system.vo.RoleVO;
 
 /**
@@ -37,7 +37,7 @@ public class RoleController {
 	@Resource
 	private RoleService roleService;
 	@Resource
-	private ResourceService resourceService;
+	private PermissionService permissionService;
 
 	private String listPage = "role/role-list";
 	private String formPage = "role/role-form";
@@ -58,18 +58,18 @@ public class RoleController {
 	public String form(ModelMap model, @PathVariable String id) {
 		RoleVO roleVO = roleService.getById(id);
 
-		// 设置菜单信息
-		String menuIds = "";
-		String menuNames = "";
-		List<ResourceVO> menus = resourceService.listByRoleId("" + roleVO.getId());
-		for (ResourceVO menu : menus) {
-			menuIds += "," + menu.getId();
-			menuNames += "," + menu.getName();
+		// 设置权限信息
+		String permissionIds = "";
+		String permissionNames = "";
+		List<PermissionVO> permissions = permissionService.listByRoleId("" + roleVO.getId());
+		for (PermissionVO p : permissions) {
+			permissionIds += "," + p.getId();
+			permissionNames += "," + p.getName();
 		}
 		// 处理前面多余的","
-		if (!"".equals(menuIds)) {
-			roleVO.setResourceIds(menuIds.substring(1));
-			roleVO.setResourceNames(menuNames.substring(1));
+		if (!"".equals(permissionIds)) {
+			roleVO.setPermissionIds(permissionIds.substring(1));
+			roleVO.setPermissionNames(permissionNames.substring(1));
 		}
 
 		model.addAttribute("data", roleVO);

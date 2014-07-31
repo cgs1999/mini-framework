@@ -14,8 +14,6 @@ public class UserVO extends BaseVO {
 
 	/** 帐号 */
 	private String account;
-	/** 姓名 */
-	private String name;
 	/** 密码 */
 	private String password;
 	/** 加密私钥 */
@@ -26,10 +24,6 @@ public class UserVO extends BaseVO {
 	private String phone;
 	/** 状态 */
 	private Integer status;
-	/** 创建时间 */
-	private String createTime;
-	/** 最后更新时间 */
-	private String updateTime;
 
 	// 角色信息
 	private String roleIds;
@@ -41,14 +35,6 @@ public class UserVO extends BaseVO {
 
 	public void setAccount(String account) {
 		this.account = account;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getPassword() {
@@ -89,22 +75,6 @@ public class UserVO extends BaseVO {
 
 	public void setStatus(Integer status) {
 		this.status = status;
-	}
-
-	public String getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
-	}
-
-	public String getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(String updateTime) {
-		this.updateTime = updateTime;
 	}
 
 	public String getRoleIds() {

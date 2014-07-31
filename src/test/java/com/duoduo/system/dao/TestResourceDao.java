@@ -161,12 +161,12 @@ public class TestResourceDao extends BaseTest {
 		List<Resource> resourceList = resourceDao.listByPermissionId("" + permissionId1);
 		Assert.assertNotNull(resourceList);
 		Assert.assertEquals(resourceList.size(), 2);
-		System.out.println("Role1's resource[" + TestHelper.getResourceNames(resourceList) + "]");
+		System.out.println("Role1's resource[" + TestHelper.getEntityListNames(resourceList) + "]");
 
 		resourceList = resourceDao.listByPermissionId("" + permissionId2);
 		Assert.assertNotNull(resourceList);
 		Assert.assertEquals(resourceList.size(), 1);
-		System.out.println("Role2's resource[" + TestHelper.getResourceNames(resourceList) + "]");
+		System.out.println("Role2's resource[" + TestHelper.getEntityListNames(resourceList) + "]");
 
 		permissionCategoryDao.delete("" + categoryId);
 		permissionDao.delete("" + permissionId1);
@@ -248,12 +248,12 @@ public class TestResourceDao extends BaseTest {
 		List<Resource> resourceList = resourceDao.listByRoleId("" + roleId1);
 		Assert.assertNotNull(resourceList);
 		Assert.assertEquals(resourceList.size(), 2);
-		System.out.println("Role1's resource[" + TestHelper.getResourceNames(resourceList) + "]");
+		System.out.println("Role1's resource[" + TestHelper.getEntityListNames(resourceList) + "]");
 
 		resourceList = resourceDao.listByRoleId("" + roleId2);
 		Assert.assertNotNull(resourceList);
 		Assert.assertEquals(resourceList.size(), 1);
-		System.out.println("Role2's resource[" + TestHelper.getResourceNames(resourceList) + "]");
+		System.out.println("Role2's resource[" + TestHelper.getEntityListNames(resourceList) + "]");
 
 		roleDao.delete("" + roleId1);
 		roleDao.delete("" + roleId2);
@@ -371,12 +371,12 @@ public class TestResourceDao extends BaseTest {
 		List<Resource> resourceList = resourceDao.listByUserId("" + userId1);
 		Assert.assertNotNull(resourceList);
 		Assert.assertEquals(resourceList.size(), 2);
-		System.out.println("User1's resource[" + TestHelper.getResourceNames(resourceList) + "]");
+		System.out.println("User1's resource[" + TestHelper.getEntityListNames(resourceList) + "]");
 
 		resourceList = resourceDao.listByUserId("" + userId2);
 		Assert.assertNotNull(resourceList);
 		Assert.assertEquals(resourceList.size(), 1);
-		System.out.println("User2's resource[" + TestHelper.getResourceNames(resourceList) + "]");
+		System.out.println("User2's resource[" + TestHelper.getEntityListNames(resourceList) + "]");
 
 		userDao.delete("" + userId1);
 		userDao.delete("" + userId2);

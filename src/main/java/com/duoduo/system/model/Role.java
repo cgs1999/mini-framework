@@ -12,22 +12,12 @@ public class Role extends IdEntity {
 
 	private static final long serialVersionUID = 7855793569562605313L;
 
-	/** 角色名称 */
-	private String name;
 	/** 角色类型，系统和自定义 */
 	private String type;
 	/** 启停状态 */
 	private Boolean enable;
 	/** 备注 */
 	private String memo;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public String getType() {
 		return type;

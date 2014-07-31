@@ -12,18 +12,8 @@ public class PermissionCategory extends IdEntity {
 
 	private static final long serialVersionUID = 7855793569562605313L;
 
-	/** 角色名称 */
-	private String name;
 	/** 备注 */
 	private String memo;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public String getMemo() {
 		return memo;

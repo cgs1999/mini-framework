@@ -69,8 +69,18 @@ public class PermissionServiceImpl implements PermissionService {
 	}
 
 	@Override
+	public List<PermissionVO> listByCategory(String categoryId) {
+		return fromEntityList(permissionManager.listByCategory(categoryId));
+	}
+
+	@Override
 	public List<PermissionVO> listByUserId(String userId) {
 		return fromEntityList(permissionManager.listByUserId(userId));
+	}
+
+	@Override
+	public List<PermissionVO> listByRoleId(String roleId) {
+		return fromEntityList(permissionManager.listByRoleId(roleId));
 	}
 
 	@Override

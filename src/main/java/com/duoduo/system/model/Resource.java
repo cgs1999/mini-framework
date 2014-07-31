@@ -12,8 +12,6 @@ public class Resource extends IdEntity {
 
 	private static final long serialVersionUID = -8619608370246744651L;
 
-	/** 资源名称 */
-	private String name;
 	/** 资源类型，菜单和操作 */
 	private String type;
 	/** 链接地址 */
@@ -29,14 +27,6 @@ public class Resource extends IdEntity {
 
 	/** 上级菜单名称 */
 	private String parentName;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public String getType() {
 		return type;

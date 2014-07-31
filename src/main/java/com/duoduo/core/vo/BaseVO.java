@@ -14,6 +14,12 @@ public class BaseVO {
 
 	/** 自增ID */
 	private Long id;
+	/** 名称 */
+	private String name;
+	/** 创建时间 */
+	private String createTime;
+	/** 最后更新时间 */
+	private String updateTime;
 
 	public Long getId() {
 		return id;
@@ -21,6 +27,30 @@ public class BaseVO {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(String updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	@Override

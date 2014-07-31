@@ -13,8 +13,6 @@ import com.duoduo.system.model.Resource;
  */
 public class ResourceVO extends BaseVO {
 
-	/** 资源名称 */
-	private String name;
 	/** 资源类型，菜单和操作 */
 	private String type;
 	/** 链接地址 */
@@ -29,21 +27,9 @@ public class ResourceVO extends BaseVO {
 	private Integer orderIndex;
 	/** 启停状态 */
 	private Boolean enable;
-	/** 创建时间 */
-	private String createTime;
-	/** 最后更新时间 */
-	private String updateTime;
 
 	// 上级菜单id, 用于treegrid的展示
 	private Long _parentId = null;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public String getType() {
 		return type;
@@ -99,22 +85,6 @@ public class ResourceVO extends BaseVO {
 
 	public void setEnable(Boolean enable) {
 		this.enable = enable;
-	}
-
-	public String getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
-	}
-
-	public String getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(String updateTime) {
-		this.updateTime = updateTime;
 	}
 
 	public Long get_parentId() {

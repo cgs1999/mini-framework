@@ -53,6 +53,11 @@ public class PermissionManagerImpl implements PermissionManager {
 	}
 
 	@Override
+	public List<Permission> listByCategory(String categoryId) {
+		return permissionDao.listByCategory(categoryId);
+	}
+
+	@Override
 	public List<Permission> listByUserId(String userId) {
 		return permissionDao.listByUserId(userId);
 	}

@@ -17,32 +17,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.duoduo.core.util.ResponseUtils;
 import com.duoduo.core.vo.Message;
 import com.duoduo.core.vo.Page;
-import com.duoduo.system.Constants;
-import com.duoduo.system.service.ResourceService;
-import com.duoduo.system.service.RoleService;
-import com.duoduo.system.vo.ResourceVO;
-import com.duoduo.system.vo.RoleVO;
+import com.duoduo.system.service.PermissionCategoryService;
+import com.duoduo.system.service.PermissionService;
+import com.duoduo.system.vo.PermissionCategoryVO;
 
 /**
- * 角色Controller
+ * 权限分类Controller
  * @author chengesheng
  * @date 2014-3-19 下午6:13:00
  */
 @Controller
-@RequestMapping("/system/role")
+@RequestMapping("/system/permissionCategory")
 public class PermissionCategoryController {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Resource
-	private RoleService roleService;
+	private PermissionCategoryService permissionCategoryService;
 	@Resource
-	private ResourceService resourceService;
+	private PermissionService permissionService;
 
-	private String listPage = "role/role-list";
-	private String formPage = "role/role-form";
-	private String readPage = "role/role-read";
-	private String selectFromAllPage = "role/selectFromAllRole";
+	private String listPage = "permissionCategory/permissionCategory-list";
+	private String formPage = "permissionCategory/permissionCategory-form";
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(ModelMap model) {
@@ -56,52 +52,26 @@ public class PermissionCategoryController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String form(ModelMap model, @PathVariable String id) {
-		RoleVO roleVO = roleService.getById(id);
-
-		// 设置菜单信息
-		String menuIds = "";
-		String menuNames = "";
-		List<ResourceVO> menus = resourceService.listByRoleId("" + roleVO.getId());
-		for (ResourceVO menu : menus) {
-			menuIds += "," + menu.getId();
-			menuNames += "," + menu.getName();
-		}
-		// 处理前面多余的","
-		if (!"".equals(menuIds)) {
-			roleVO.setResourceIds(menuIds.substring(1));
-			roleVO.setResourceNames(menuNames.substring(1));
-		}
-
-		model.addAttribute("data", roleVO);
-
-		if (Constants.SYSTEM_ROLE.equals(roleVO.getType())) {
-			return readPage;
-		} else {
-			return formPage;
-		}
-	}
-
-	@RequestMapping(value = "/selectFromAllRole", method = RequestMethod.GET)
-	public String selectFromAllRole(ModelMap model) {
-		return selectFromAllPage;
+		model.addAttribute("data", permissionCategoryService.getById(id));
+		return formPage;
 	}
 
 	@RequestMapping(value = "/getPageList", method = RequestMethod.POST)
-	public void getPageList(HttpServletResponse response, Page<RoleVO> page,
+	public void getPageList(HttpServletResponse response, Page<PermissionCategoryVO> page,
 			@RequestParam(value = "name", required = false) String name) {
-		page = roleService.pagingList(name, page);
+		page = permissionCategoryService.pagingList(name, page);
 		ResponseUtils.renderJson(response, page);
 	}
 
 	@RequestMapping(value = "/listAll", method = RequestMethod.POST)
 	public void listAll(HttpServletResponse response) {
-		List<RoleVO> roles = roleService.listAll();
-		ResponseUtils.renderJson(response, roles);
+		List<PermissionCategoryVO> permissionCategorys = permissionCategoryService.listAll();
+		ResponseUtils.renderJson(response, permissionCategorys);
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public void save(HttpServletResponse response, RoleVO roleVO) {
-		ResponseUtils.renderJson(response, save(roleVO));
+	public void save(HttpServletResponse response, PermissionCategoryVO permissionCategoryVO) {
+		ResponseUtils.renderJson(response, save(permissionCategoryVO));
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
@@ -109,24 +79,24 @@ public class PermissionCategoryController {
 		ResponseUtils.renderJson(response, delete(id));
 	}
 
-	private Message<String> save(RoleVO roleVO) {
+	private Message<String> save(PermissionCategoryVO permissionCategoryVO) {
 		Message<String> message = new Message<String>(true, "保存成功");
 
 		try {
 			int nResult = -1;
-			if (roleVO != null) {
-				// 校验角色名称
-				RoleVO vo = roleService.getByName(roleVO.getName());
-				if (vo != null && !roleVO.equals(vo)) {
+			if (permissionCategoryVO != null) {
+				// 校验权限分类名称
+				PermissionCategoryVO vo = permissionCategoryService.getByName(permissionCategoryVO.getName());
+				if (vo != null && !permissionCategoryVO.equals(vo)) {
 					message.setSuccess(false);
-					message.setDescription("角色名称已存在");
+					message.setDescription("权限分类名称已存在");
 					return message;
 				}
 
-				if (roleVO.getId() == null) {
-					roleService.create(roleVO);
+				if (permissionCategoryVO.getId() == null) {
+					permissionCategoryService.create(permissionCategoryVO);
 				} else {
-					roleService.update(roleVO);
+					permissionCategoryService.update(permissionCategoryVO);
 				}
 			}
 
@@ -155,7 +125,7 @@ public class PermissionCategoryController {
 		Message<String> message = new Message<String>(true, "删除成功");
 
 		try {
-			boolean ret = roleService.delete(id);
+			boolean ret = permissionCategoryService.delete(id);
 			if (!ret) {
 				message.setSuccess(false);
 				message.setDescription("删除失败，请联系管理员!");

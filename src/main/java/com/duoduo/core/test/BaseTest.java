@@ -26,22 +26,22 @@ public class BaseTest {
 	@Rule
 	public TestName name = new TestName();
 
-	public String getClassName() {
-		return getClass().getName();
-	}
-
-	public String getMethodName() {
-		return name.getMethodName();
-	}
-
 	@Before
 	public void before() {
-		System.out.println("-------------------------------------------------------------");
+		System.out.println("----------------------------------------------------------------------------");
 		System.out.println("Test[" + getClassName() + "." + getMethodName() + "] start...");
 	}
 
 	@After
 	public void after() {
 		System.out.println("Test[" + getClassName() + "." + getMethodName() + "] end...");
+	}
+
+	private String getClassName() {
+		return getClass().getName();
+	}
+
+	private String getMethodName() {
+		return name.getMethodName();
 	}
 }

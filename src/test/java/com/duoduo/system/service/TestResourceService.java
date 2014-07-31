@@ -1,6 +1,10 @@
 package com.duoduo.system.service;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
+
+import com.duoduo.core.test.BaseTest;
 
 /**
  * TODO
@@ -8,7 +12,8 @@ import org.junit.Test;
  * @date 2014-7-21 下午4:53:55
  * @version 1.0.0
  */
-public class TestResourceService {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class TestResourceService extends BaseTest {
 
 	@Test
 	public void test() {
