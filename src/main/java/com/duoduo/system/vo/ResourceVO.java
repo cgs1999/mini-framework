@@ -114,7 +114,7 @@ public class ResourceVO extends BaseVO {
 		vo.setUpdateTime(DateUtils.toDatetimeString(entity.getUpdateTime()));
 
 		// 设置_parentId
-		if (entity.getParentId() != Constants.ROOT_MENU_ID) {
+		if (entity.getParentId() != null && entity.getParentId() != Constants.ROOT_MENU_ID) {
 			vo.set_parentId(entity.getParentId());
 		}
 		return vo;
@@ -151,7 +151,7 @@ public class ResourceVO extends BaseVO {
 		vo.setParentId(entity.getParentId());
 
 		// 设置_parentId
-		if (entity.getParentId() != Constants.ROOT_MENU_ID) {
+		if (entity.getParentId() != null && entity.getParentId() != Constants.ROOT_MENU_ID) {
 			vo.set_parentId(entity.getParentId());
 		}
 		return vo;

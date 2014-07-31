@@ -24,6 +24,9 @@ import com.duoduo.system.vo.UserVO;
  */
 public class TestHelper {
 
+	// ***************************************
+	// Entity
+	// ***************************************
 	// 创建用户1
 	public static User createUser1() {
 		User user = new User();
@@ -160,58 +163,9 @@ public class TestHelper {
 		return resource;
 	}
 
-	/**
-	 * 获取所有实体Id，结果以逗号分隔，例如：1,2,4
-	 * @param entityList
-	 * @return
-	 */
-	public static <T extends IdEntity> String getEntityListIds(List<T> entityList) {
-		String ret = "";
-		for (T t : entityList) {
-			ret += "," + t.getId();
-		}
-		return ret.substring(1);
-	}
-
-	/**
-	 * 获取所有实体名称，结果以逗号分隔，例如：create,update,delete
-	 * @param entityList
-	 * @return
-	 */
-	public static <T extends IdEntity> String getEntityListNames(List<T> entityList) {
-		String ret = "";
-		for (T t : entityList) {
-			ret += "," + t.getName();
-		}
-		return ret.substring(1);
-	}
-
-	/**
-	 * 获取所有值对象Id，结果以逗号分隔，例如：1,2,4
-	 * @param voList
-	 * @return
-	 */
-	public static <T extends BaseVO> String getVOListIds(List<T> voList) {
-		String ret = "";
-		for (T t : voList) {
-			ret += "," + t.getId();
-		}
-		return ret.substring(1);
-	}
-
-	/**
-	 * 获取所有值对象名称，结果以逗号分隔，例如：create,update,delete
-	 * @param voList
-	 * @return
-	 */
-	public static <T extends BaseVO> String getVOListNames(List<T> voList) {
-		String ret = "";
-		for (T t : voList) {
-			ret += "," + t.getName();
-		}
-		return ret.substring(1);
-	}
-
+	// ***************************************
+	// VO
+	// ***************************************
 	// 创建用户VO1
 	public static UserVO createUserVO1(String roleIds) {
 		UserVO user = new UserVO();
@@ -358,5 +312,78 @@ public class TestHelper {
 		resource.setOrderIndex(2010);
 		resource.setEnable(Boolean.FALSE);
 		return resource;
+	}
+
+	/**
+	 * 获取所有实体Id，结果以逗号分隔，例如：1,2,4
+	 * @param entityList
+	 * @return
+	 */
+	public static <T extends IdEntity> String getEntityListIds(List<T> entityList) {
+		String ret = "";
+		for (T t : entityList) {
+			ret += "," + t.getId();
+		}
+		return ret.substring(1);
+	}
+
+	/**
+	 * 获取所有实体名称，结果以逗号分隔，例如：create,update,delete
+	 * @param entityList
+	 * @return
+	 */
+	public static <T extends IdEntity> String getEntityListNames(List<T> entityList) {
+		String ret = "";
+		for (T t : entityList) {
+			ret += "," + t.getName();
+		}
+		return ret.substring(1);
+	}
+
+	/**
+	 * 输出实体列表信息
+	 * @param entityList
+	 * @return
+	 */
+	public static <T extends IdEntity> void printEntityList(List<T> entityList) {
+		for (T t : entityList) {
+			System.out.println("Entity[" + t.getName() + "]=" + t.toString());
+		}
+	}
+
+	/**
+	 * 获取所有值对象Id，结果以逗号分隔，例如：1,2,4
+	 * @param voList
+	 * @return
+	 */
+	public static <T extends BaseVO> String getVOListIds(List<T> voList) {
+		String ret = "";
+		for (T t : voList) {
+			ret += "," + t.getId();
+		}
+		return ret.substring(1);
+	}
+
+	/**
+	 * 获取所有值对象名称，结果以逗号分隔，例如：create,update,delete
+	 * @param voList
+	 * @return
+	 */
+	public static <T extends BaseVO> String getVOListNames(List<T> voList) {
+		String ret = "";
+		for (T t : voList) {
+			ret += "," + t.getName();
+		}
+		return ret.substring(1);
+	}
+
+	/**
+	 * 输出值对象列表信息
+	 * @param voList
+	 */
+	public static <T extends BaseVO> void printVOList(List<T> voList) {
+		for (T t : voList) {
+			System.out.println("VO[" + t.getName() + "]=" + t.toString());
+		}
 	}
 }

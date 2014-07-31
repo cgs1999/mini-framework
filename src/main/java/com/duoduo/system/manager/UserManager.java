@@ -46,6 +46,14 @@ public interface UserManager {
 	public boolean delete(String id);
 
 	/**
+	 * 分页查询用户列表（关键字模糊查询，模糊查询内容：帐号、姓名、电子邮箱、电话）
+	 * @param key
+	 * @param page
+	 * @return
+	 */
+	public Page<User> pagingList(String key, Page<User> page);
+
+	/**
 	 * 分页查询用户列表（模糊查询，条件为：帐号、姓名、电子邮箱、电话）
 	 * @param account 帐号
 	 * @param name 姓名

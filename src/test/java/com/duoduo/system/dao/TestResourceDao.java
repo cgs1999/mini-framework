@@ -487,8 +487,13 @@ public class TestResourceDao extends BaseTest {
 
 	@Test
 	public void test40Delete() {
-		resourceDao.delete("" + entityId1);
-		resourceDao.delete("" + entityId2);
+		Assert.assertTrue(resourceDao.delete("" + entityId1));
+		Resource resource = resourceDao.getById("" + entityId1);
+		Assert.assertNull(resource);
+
+		Assert.assertTrue(resourceDao.delete("" + entityId2));
+		resource = resourceDao.getById("" + entityId2);
+		Assert.assertNull(resource);
 
 		Page<Resource> page = new Page<Resource>();
 		page = resourceDao.pagingList(null, page);

@@ -48,6 +48,11 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
+	public Page<User> pagingList(String key, Page<User> page) {
+		return userDao.pagingList(key, page);
+	}
+
+	@Override
 	public Page<User> pagingList(String account, String name, String email, String phone, Page<User> page) {
 		return userDao.pagingList(account, name, email, phone, page);
 	}

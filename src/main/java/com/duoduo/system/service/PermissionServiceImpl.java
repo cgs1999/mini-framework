@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.duoduo.core.vo.Page;
 import com.duoduo.system.manager.PermissionManager;
+import com.duoduo.system.manager.PermissionResourceManager;
 import com.duoduo.system.model.Permission;
 import com.duoduo.system.vo.PermissionVO;
 
@@ -25,6 +26,8 @@ public class PermissionServiceImpl implements PermissionService {
 
 	@Resource
 	private PermissionManager permissionManager;
+	@Resource
+	private PermissionResourceManager permissionResourceManager;
 
 	@Override
 	public PermissionVO getById(String id) {
@@ -50,17 +53,29 @@ public class PermissionServiceImpl implements PermissionService {
 		if (permission == null) {
 			return null;
 		}
+
+		// 保存权限资源关系
+		permissionResourceManager.saveOrUpdate("" + permission.getId(), permissionVO.getResourceIds());
+
 		return PermissionVO.fromEntity(permission);
 	}
 
 	@Override
 	public void update(PermissionVO permissionVO) {
 		permissionManager.update(PermissionVO.toEntity(permissionVO));
+
+		// 更新权限资源关系
+		permissionResourceManager.saveOrUpdate("" + permissionVO.getId(), permissionVO.getResourceIds());
 	}
 
 	@Override
 	public boolean delete(String id) {
-		return permissionManager.delete(id);
+		boolean ret = permissionManager.delete(id);
+
+		// 删除权限资源关系
+		permissionResourceManager.deleteByPermissionId(id);
+
+		return ret;
 	}
 
 	@Override

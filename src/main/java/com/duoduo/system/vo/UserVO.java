@@ -106,7 +106,7 @@ public class UserVO extends BaseVO {
 		vo.setPassword(entity.getPassword());
 		vo.setSalt(entity.getSalt());
 		vo.setEmail(entity.getEmail());
-		vo.setPassword(entity.getPhone());
+		vo.setPhone(entity.getPhone());
 		vo.setStatus(entity.getStatus());
 		vo.setCreateTime(DateUtils.toDatetimeString(entity.getCreateTime()));
 		vo.setUpdateTime(DateUtils.toDatetimeString(entity.getUpdateTime()));
@@ -126,7 +126,7 @@ public class UserVO extends BaseVO {
 		entity.setPassword(vo.getPassword());
 		entity.setSalt(vo.getSalt());
 		entity.setEmail(vo.getEmail());
-		entity.setPassword(vo.getPhone());
+		entity.setPhone(vo.getPhone());
 		entity.setStatus(vo.getStatus());
 		return entity;
 	}

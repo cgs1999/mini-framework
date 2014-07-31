@@ -79,6 +79,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public Page<UserVO> pagingList(String key, Page<UserVO> page) {
+		Page<User> entityPage = userManager.pagingList(key, toEntityPage(page));
+
+		return fromEntityPage(entityPage);
+	}
+
+	@Override
 	public Page<UserVO> pagingList(String account, String name, String email, String phone, Page<UserVO> page) {
 		Page<User> entityPage = userManager.pagingList(account, name, email, phone, toEntityPage(page));
 

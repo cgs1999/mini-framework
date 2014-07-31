@@ -113,8 +113,13 @@ public class TestPermissionCategoryDao extends BaseTest {
 
 	@Test
 	public void test40Delete() {
-		permissionCategoryDao.delete("" + entityId1);
-		permissionCategoryDao.delete("" + entityId2);
+		Assert.assertTrue(permissionCategoryDao.delete("" + entityId1));
+		PermissionCategory permissionCategory = permissionCategoryDao.getById("" + entityId1);
+		Assert.assertNull(permissionCategory);
+
+		Assert.assertTrue(permissionCategoryDao.delete("" + entityId2));
+		permissionCategory = permissionCategoryDao.getById("" + entityId2);
+		Assert.assertNull(permissionCategory);
 
 		List<PermissionCategory> permissionCategoryList = permissionCategoryDao.listAll();
 		Assert.assertNotNull(permissionCategoryList);

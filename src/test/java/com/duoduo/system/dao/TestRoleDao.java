@@ -36,11 +36,6 @@ public class TestRoleDao extends BaseTest {
 	private UserRoleDao userRoleDao;
 
 	@Test
-	public void test00() {
-		System.out.println(getClass());
-	}
-
-	@Test
 	public void test10Create() {
 		// 创建角色1
 		Role role = roleDao.create(TestHelper.createRole1());
@@ -60,13 +55,9 @@ public class TestRoleDao extends BaseTest {
 
 	@Test
 	public void test20GetById() {
-		if (entityId1 != null) {
-			Role role = roleDao.getById("" + entityId1);
-			Assert.assertNotNull(role);
-			Assert.assertEquals(role.getName(), "admin");
-		} else {
-			System.out.println("testGetById entityId is: " + entityId1);
-		}
+		Role role = roleDao.getById("" + entityId1);
+		Assert.assertNotNull(role);
+		Assert.assertEquals(role.getName(), "admin");
 	}
 
 	@Test
@@ -82,7 +73,7 @@ public class TestRoleDao extends BaseTest {
 		Assert.assertNotNull(roleList);
 		Assert.assertEquals(roleList.size(), 2);
 
-		printRoleList(roleList);
+		TestHelper.printEntityList(roleList);
 	}
 
 	@Test
@@ -109,7 +100,7 @@ public class TestRoleDao extends BaseTest {
 		Assert.assertNotNull(roleList);
 		Assert.assertEquals(roleList.size(), 2);
 
-		printRoleList(roleList);
+		TestHelper.printEntityList(roleList);
 
 		// 删除用户角色关系(共2条记录)
 		userRoleDao.deleteByUserId("" + userId);
@@ -129,59 +120,27 @@ public class TestRoleDao extends BaseTest {
 
 	@Test
 	public void test30Update() {
-		if (entityId1 != null) {
-			Role role = roleDao.getById("" + entityId1);
-			Assert.assertNotNull(role);
+		Role role = roleDao.getById("" + entityId1);
+		Assert.assertNotNull(role);
 
-			role.setType("2");
-			role.setMemo("修改后的备注信息");
+		role.setType("2");
+		role.setMemo("修改后的备注信息");
 
-			roleDao.update(role);
+		roleDao.update(role);
 
-			role = roleDao.getById("" + entityId1);
-			Assert.assertNotNull(role);
-			Assert.assertEquals(role.getType(), "2");
-		} else {
-			System.out.println("testUpdate entityId is: " + entityId1);
-		}
+		role = roleDao.getById("" + entityId1);
+		Assert.assertNotNull(role);
+		Assert.assertEquals(role.getType(), "2");
 	}
 
 	@Test
 	public void test40Delete() {
-		// 删除角色1
-		if (entityId1 != null) {
-			Role role = roleDao.getById("" + entityId1);
-			Assert.assertNotNull(role);
+		Assert.assertTrue(roleDao.delete("" + entityId1));
+		Role role = roleDao.getById("" + entityId1);
+		Assert.assertNull(role);
 
-			roleDao.delete("" + entityId1);
-
-			role = roleDao.getById("" + entityId1);
-			Assert.assertNull(role);
-
-			entityId1 = null;
-		} else {
-			System.out.println("testDelete entityId is: " + entityId1);
-		}
-
-		// 删除角色2
-		if (entityId2 != null) {
-			Role role = roleDao.getById("" + entityId2);
-			Assert.assertNotNull(role);
-
-			roleDao.delete("" + entityId2);
-
-			role = roleDao.getById("" + entityId2);
-			Assert.assertNull(role);
-
-			entityId2 = null;
-		} else {
-			System.out.println("testDelete entityId is: " + entityId2);
-		}
-	}
-
-	private void printRoleList(List<Role> roleList) {
-		for (Role role : roleList) {
-			System.out.println("role[" + role.getId() + "]=" + role.toString());
-		}
+		Assert.assertTrue(roleDao.delete("" + entityId2));
+		role = roleDao.getById("" + entityId2);
+		Assert.assertNull(role);
 	}
 }

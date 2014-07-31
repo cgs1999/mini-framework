@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.duoduo.core.vo.Page;
 import com.duoduo.system.manager.RoleManager;
+import com.duoduo.system.manager.RolePermissionManager;
 import com.duoduo.system.model.Role;
 import com.duoduo.system.vo.RoleVO;
 
@@ -25,6 +26,8 @@ public class RoleServiceImpl implements RoleService {
 
 	@Resource
 	private RoleManager roleManager;
+	@Resource
+	private RolePermissionManager rolePermissionManager;
 
 	@Override
 	public RoleVO getById(String id) {
@@ -50,17 +53,29 @@ public class RoleServiceImpl implements RoleService {
 		if (role == null) {
 			return null;
 		}
+
+		// 保存角色权限关系
+		rolePermissionManager.saveOrUpdate("" + role.getId(), roleVO.getPermissionIds());
+
 		return RoleVO.fromEntity(role);
 	}
 
 	@Override
 	public void update(RoleVO roleVO) {
 		roleManager.update(RoleVO.toEntity(roleVO));
+
+		// 更新角色权限关系
+		rolePermissionManager.saveOrUpdate("" + roleVO.getId(), roleVO.getPermissionIds());
 	}
 
 	@Override
 	public boolean delete(String id) {
-		return roleManager.delete(id);
+		boolean ret = roleManager.delete(id);
+
+		// 删除角色权限关系
+		rolePermissionManager.deleteByRoleId(id);
+
+		return ret;
 	}
 
 	@Override

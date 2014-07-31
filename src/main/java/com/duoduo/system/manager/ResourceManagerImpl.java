@@ -35,11 +35,19 @@ public class ResourceManagerImpl implements ResourceManager {
 
 	@Override
 	public Resource create(Resource resource) {
+		if (resource.getParentId() == null) {
+			resource.setParentId(Constants.ROOT_MENU_ID);
+		}
+
 		return resourceDao.create(resource);
 	}
 
 	@Override
 	public void update(Resource resource) {
+		if (resource.getParentId() == null) {
+			resource.setParentId(Constants.ROOT_MENU_ID);
+		}
+
 		resourceDao.update(resource);
 	}
 

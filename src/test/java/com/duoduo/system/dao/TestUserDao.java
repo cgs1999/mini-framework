@@ -48,24 +48,16 @@ public class TestUserDao extends BaseTest {
 
 	@Test
 	public void test20GetById() {
-		if (entityId1 != null) {
-			User user = userDao.getById("" + entityId1);
-			Assert.assertNotNull(user);
-			Assert.assertEquals(user.getAccount(), "cgs");
-		} else {
-			System.out.println("testGetById entityId is: " + entityId1);
-		}
+		User user = userDao.getById("" + entityId1);
+		Assert.assertNotNull(user);
+		Assert.assertEquals(user.getAccount(), "cgs");
 	}
 
 	@Test
 	public void test22GetByAccount() {
-		if (entityId1 != null) {
-			User user = userDao.getByAccount("cgs");
-			Assert.assertNotNull(user);
-			Assert.assertEquals(user.getId(), entityId1);
-		} else {
-			System.out.println("testGetByAccount entityId is: " + entityId1);
-		}
+		User user = userDao.getByAccount("cgs");
+		Assert.assertNotNull(user);
+		Assert.assertEquals(user.getId(), entityId1);
 	}
 
 	@Test
@@ -130,53 +122,27 @@ public class TestUserDao extends BaseTest {
 
 	@Test
 	public void test30Update() {
-		if (entityId1 != null) {
-			User user = userDao.getById("" + entityId1);
-			Assert.assertNotNull(user);
+		User user = userDao.getById("" + entityId1);
+		Assert.assertNotNull(user);
 
-			String salt = UUID.randomUUID().toString();
-			user.setSalt(salt);
+		String salt = UUID.randomUUID().toString();
+		user.setSalt(salt);
 
-			userDao.update(user);
+		userDao.update(user);
 
-			user = userDao.getById("" + entityId1);
-			Assert.assertNotNull(user);
-			Assert.assertEquals(user.getSalt(), salt);
-		} else {
-			System.out.println("testUpdate entityId is: " + entityId1);
-		}
+		user = userDao.getById("" + entityId1);
+		Assert.assertNotNull(user);
+		Assert.assertEquals(user.getSalt(), salt);
 	}
 
 	@Test
 	public void test40Delete() {
-		// 删除用户1
-		if (entityId1 != null) {
-			User user = userDao.getById("" + entityId1);
-			Assert.assertNotNull(user);
+		Assert.assertTrue(userDao.delete("" + entityId1));
+		User user = userDao.getById("" + entityId1);
+		Assert.assertNull(user);
 
-			userDao.delete("" + entityId1);
-
-			user = userDao.getById("" + entityId1);
-			Assert.assertNull(user);
-
-			entityId1 = null;
-		} else {
-			System.out.println("testDelete entityId1 is: " + entityId1);
-		}
-
-		// 删除用户2
-		if (entityId2 != null) {
-			User user = userDao.getById("" + entityId2);
-			Assert.assertNotNull(user);
-
-			userDao.delete("" + entityId2);
-
-			user = userDao.getById("" + entityId2);
-			Assert.assertNull(user);
-
-			entityId2 = null;
-		} else {
-			System.out.println("testDelete entityId2 is: " + entityId2);
-		}
+		Assert.assertTrue(userDao.delete("" + entityId2));
+		user = userDao.getById("" + entityId2);
+		Assert.assertNull(user);
 	}
 }
