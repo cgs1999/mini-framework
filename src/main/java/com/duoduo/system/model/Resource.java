@@ -24,6 +24,8 @@ public class Resource extends IdEntity {
 	private Integer orderIndex;
 	/** 启停状态 */
 	private Boolean enable;
+	/** 备注 */
+	private String memo;
 
 	/** 上级菜单名称 */
 	private String parentName;
@@ -82,6 +84,14 @@ public class Resource extends IdEntity {
 
 	public void setEnable(Boolean enable) {
 		this.enable = enable;
+	}
+
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
 	}
 
 }

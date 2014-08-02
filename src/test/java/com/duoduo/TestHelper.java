@@ -112,6 +112,7 @@ public class TestHelper {
 		resource.setParentId(null);
 		resource.setOrderIndex(0);
 		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("系统配置");
 		return resource;
 	}
 
@@ -124,6 +125,7 @@ public class TestHelper {
 		resource.setParentId(parentId);
 		resource.setOrderIndex(10);
 		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("用户管理");
 		return resource;
 	}
 
@@ -136,6 +138,7 @@ public class TestHelper {
 		resource.setParentId(parentId);
 		resource.setOrderIndex(20);
 		resource.setEnable(Boolean.FALSE);
+		resource.setMemo("角色管理");
 		return resource;
 	}
 
@@ -148,6 +151,7 @@ public class TestHelper {
 		resource.setParentId(parentId);
 		resource.setOrderIndex(1010);
 		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("创建记录");
 		return resource;
 	}
 
@@ -160,6 +164,7 @@ public class TestHelper {
 		resource.setParentId(parentId);
 		resource.setOrderIndex(2010);
 		resource.setEnable(Boolean.FALSE);
+		resource.setMemo("删除记录");
 		return resource;
 	}
 

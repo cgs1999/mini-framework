@@ -47,6 +47,7 @@ public class ResourceDao extends BaseDao {
 			resource.setParentIds(rs.getString("parent_ids"));
 			resource.setOrderIndex(rs.getInt("order_index"));
 			resource.setEnable(rs.getBoolean("enable"));
+			resource.setMemo(rs.getString("memo"));
 			resource.setCreateTime(rs.getTimestamp("create_time"));
 			resource.setUpdateTime(rs.getTimestamp("update_time"));
 			return resource;
@@ -54,7 +55,7 @@ public class ResourceDao extends BaseDao {
 	};
 
 	private static final String getByIdSql = "select r.*,r2.name as parentName from sys_resource r"
-			+ " left join sys_resource r2 on r.parent_id=r2.id" + " where r.id=?";
+			+ " left join sys_resource r2 on r.parent_id=r2.id" + " where r.id=?" + " order by r.order_index";
 
 	/**
 	 * 根据Id获取资源
@@ -68,7 +69,7 @@ public class ResourceDao extends BaseDao {
 		return null;
 	}
 
-	private static final String getByNameSql = "select * from sys_resource where name=?";
+	private static final String getByNameSql = "select * from sys_resource where name=?" + " order by order_index";
 
 	/**
 	 * 根据名称获取资源
@@ -82,8 +83,8 @@ public class ResourceDao extends BaseDao {
 		return null;
 	}
 
-	private static final String insertSql = "insert into sys_resource(name,type,url,parent_id,parent_ids,order_index,enable,create_time,update_time) values"
-			+ "(?,?,?,?,?,?,?,now(),now())";
+	private static final String insertSql = "insert into sys_resource(name,type,url,parent_id,parent_ids,order_index,enable,memo,create_time,update_time) values"
+			+ "(?,?,?,?,?,?,?,?,now(),now())";
 
 	/**
 	 * 创建资源
@@ -104,6 +105,7 @@ public class ResourceDao extends BaseDao {
 				ps.setString(count++, resource.getParentIds());
 				ps.setInt(count++, resource.getOrderIndex());
 				ps.setInt(count++, resource.getEnable() ? 1 : 0);
+				ps.setString(count++, resource.getMemo());
 				return ps;
 			}
 		}, keyHolder);
@@ -112,7 +114,7 @@ public class ResourceDao extends BaseDao {
 		return resource;
 	}
 
-	private static final String updateSql = "update sys_resource set name=?,type=?,url=?,parent_id=?,parent_ids=?,order_index=?,enable=?,update_time=now() where id=?";
+	private static final String updateSql = "update sys_resource set name=?,type=?,url=?,parent_id=?,parent_ids=?,order_index=?,enable=?,memo=?,update_time=now() where id=?";
 
 	/**
 	 * 修改资源
@@ -120,7 +122,8 @@ public class ResourceDao extends BaseDao {
 	public void update(Resource resource) {
 		Object[] args = new Object[] {
 				resource.getName(), resource.getType(), resource.getUrl(), resource.getParentId(),
-				resource.getParentIds(), resource.getOrderIndex(), resource.getEnable(), resource.getId()
+				resource.getParentIds(), resource.getOrderIndex(), resource.getEnable(), resource.getMemo(),
+				resource.getId()
 		};
 		super.getJdbcTemplate().update(updateSql, args);
 	}
@@ -148,6 +151,7 @@ public class ResourceDao extends BaseDao {
 			queryByPageSql += " and r.name like :likeName";
 		}
 
+		queryByPageSql += " order by r.order_index";
 		queryByPageSql += " limit :start,:limit";
 
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -185,7 +189,8 @@ public class ResourceDao extends BaseDao {
 	private static final String listByUserIdSql = "select distinct r.* from sys_resource r"
 			+ " left join sys_permission_resource pr on pr.resource_id=r.id"
 			+ " left join sys_role_permission rp on rp.permission_id=pr.permission_id"
-			+ " left join sys_user_role ur on ur.role_id=rp.role_id" + " where ur.user_id = ?";
+			+ " left join sys_user_role ur on ur.role_id=rp.role_id" + " where ur.user_id = ?"
+			+ " order by r.order_index";
 
 	/**
 	 * 根据用户Id获取资源
@@ -201,7 +206,8 @@ public class ResourceDao extends BaseDao {
 
 	private static final String listByRoleIdSql = "select distinct r.* from sys_resource r"
 			+ " left join sys_permission_resource pr on pr.resource_id=r.id"
-			+ " left join sys_role_permission rp on rp.permission_id=pr.permission_id" + " where rp.role_id = ?";
+			+ " left join sys_role_permission rp on rp.permission_id=pr.permission_id" + " where rp.role_id = ?"
+			+ " order by r.order_index";
 
 	/**
 	 * 根据角色Id获取资源
@@ -216,7 +222,8 @@ public class ResourceDao extends BaseDao {
 	}
 
 	private static final String listByPermissionIdSql = "select distinct r.* from sys_resource r"
-			+ " left join sys_permission_resource pr on pr.resource_id=r.id" + " where pr.permission_id = ?";
+			+ " left join sys_permission_resource pr on pr.resource_id=r.id" + " where pr.permission_id = ?"
+			+ " order by r.order_index";
 
 	/**
 	 * 根据权限Id获取资源
@@ -231,7 +238,7 @@ public class ResourceDao extends BaseDao {
 		return null;
 	}
 
-	private static final String listByTypeSql = "select * from sys_resource where type=?";
+	private static final String listByTypeSql = "select * from sys_resource where type=?" + " order by order_index";
 
 	/**
 	 * 根据类型获取资源
@@ -258,6 +265,7 @@ public class ResourceDao extends BaseDao {
 			} else {
 				sql += " and parent_id = ?";
 			}
+			sql += " order by order_index";
 			List<Resource> resources = super.getJdbcTemplate().query(sql, entityRowMapper, parentId);
 			return resources;
 		} catch (DataAccessException e) {
@@ -279,6 +287,7 @@ public class ResourceDao extends BaseDao {
 				sql += " and parent_id = ?";
 			}
 			sql += " and type=?";
+			sql += " order by order_index";
 			List<Resource> resources = super.getJdbcTemplate().query(sql, entityRowMapper, parentId, type);
 			return resources;
 		} catch (DataAccessException e) {

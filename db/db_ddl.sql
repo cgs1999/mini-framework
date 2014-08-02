@@ -61,6 +61,7 @@ CREATE TABLE `sys_resource` (
   `parent_ids` varchar(200) DEFAULT NULL COMMENT '所有父资源ID，以半角逗号分隔',
   `order_index` int(11) NOT NULL DEFAULT '0' COMMENT '排序编号，值越大越靠后',
   `enable` int(1) NOT NULL DEFAULT '0' COMMENT '启停状态',
+  `memo` varchar(200) DEFAULT NULL COMMENT '备注',
   `create_time` timestamp DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   `update_time` timestamp DEFAULT '0000-00-00 00:00:00' COMMENT '最后更新时间',
   PRIMARY KEY (`id`),

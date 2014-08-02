@@ -13,7 +13,7 @@ import com.duoduo.system.model.Resource;
  */
 public class ResourceVO extends BaseVO {
 
-	/** 资源类型，菜单和操作 */
+	/** 资源类型，菜单、操作和URL */
 	private String type;
 	/** 链接地址 */
 	private String url;
@@ -27,6 +27,8 @@ public class ResourceVO extends BaseVO {
 	private Integer orderIndex;
 	/** 启停状态 */
 	private Boolean enable;
+	/** 备注 */
+	private String memo;
 
 	// 上级菜单id, 用于treegrid的展示
 	private Long _parentId = null;
@@ -87,6 +89,14 @@ public class ResourceVO extends BaseVO {
 		this.enable = enable;
 	}
 
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+
 	public Long get_parentId() {
 		return _parentId;
 	}
@@ -110,6 +120,7 @@ public class ResourceVO extends BaseVO {
 		vo.setParentIds(entity.getParentIds());
 		vo.setOrderIndex(entity.getOrderIndex());
 		vo.setEnable(entity.getEnable());
+		vo.setMemo(entity.getMemo());
 		vo.setCreateTime(DateUtils.toDatetimeString(entity.getCreateTime()));
 		vo.setUpdateTime(DateUtils.toDatetimeString(entity.getUpdateTime()));
 
@@ -135,6 +146,7 @@ public class ResourceVO extends BaseVO {
 		entity.setParentIds(vo.getParentIds());
 		entity.setOrderIndex(vo.getOrderIndex());
 		entity.setEnable(vo.getEnable());
+		entity.setMemo(vo.getMemo());
 		return entity;
 	}
 
