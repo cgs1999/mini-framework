@@ -1,218 +1,55 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/security"
-	xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:security="http://www.springframework.org/schema/security"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/security
-	http://www.springframework.org/schema/security/spring-security-3.0.xsd
-	http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-	http://www.springframework.org/schema/context
-	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+			 xmlns:beans="http://www.springframework.org/schema/beans"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                        http://www.springframework.org/schema/security 
+                        http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
 
-	<!--
-		自定义登录过滤器，取消 auto-config
-		为true配置（配置remember-me、logout）,disable-url-rewriting
-		用来配置是否在地址栏显示jsessionid
-	-->
-	<security:http use-expressions="true" create-session="always"
-		disable-url-rewriting="true" entry-point-ref="authenticationProcessingFilterEntryPoint"
-		access-denied-page="/access/denied">
-		<!--
-			login-page:指定登录页面 （默认登录验证不能满足多参数、及GET请求，故通过自定义LoginFilter实现）
-			<security:form-login login-page="/login"
-			login-processing-url="/j_spring_security_check"
-			always-use-default-target="true" default-target-url="/login/success"
-			authentication-failure-url="/login/failure" />
-		-->
-		<!-- 除登入页面及验证失败页面不需要保护，其他都需要拦截 -->
-		<!--健康检查 -->
-		<security:intercept-url pattern="/check/**"
-			filters="none" />
-		<security:intercept-url pattern="/access/denied"
-			filters="none" />
-		<security:intercept-url pattern="/adminVerifyImage*"
-			filters="none" />
-		<security:intercept-url pattern="/login"
-			filters="none" />
-		<security:intercept-url pattern="/changeLocale"
-			filters="none" />
-		<security:intercept-url pattern="/loginAction.do"
-			filters="none" />
-		<security:intercept-url pattern="/login/failure"
-			filters="none" />
-		<security:intercept-url pattern="/toLogin"
-			filters="none" />
-
-		<!-- 静态资源不需保护 -->
-		<security:intercept-url pattern="/static/**"
-			filters="none" />
-		<!--
-			设置cookie有效期是两年（60 * 60 * 24 * 365 * 2），默认为两周（auto-config为true时才起作用）
-			<security:remember-me token-validity-seconds="63072000"
-			user-service-ref="userDetailsService"
-			key="kedacom-remKey-GVVxVQMjhNcccKYviQk7MocaWQnoJVz785KG" />
-		-->
-
-		<!--
-			注销Sessions，并退出至登录页面
-			（remember-me自定义时logout也需要自定义配置，不然session注销时不清cookie） <security:logout
-			invalidate-session="true" logout-success-url="/login"
-			logout-url="/j_spring_security_logout" />
-			<security:session-management invalid-session-url="/login" />
-		-->
-
-		<!-- 自定义过滤器 -->
-		<security:custom-filter ref="loginFilter"
-			position="FORM_LOGIN_FILTER" />
-		<security:custom-filter ref="rememberMeFilter"
-			position="REMEMBER_ME_FILTER" />
-		<security:custom-filter position="CONCURRENT_SESSION_FILTER"
-			ref="concurrencyFilter" />
-		<security:custom-filter ref="myFilter"
-			before="FILTER_SECURITY_INTERCEPTOR" />
-		<security:custom-filter ref="logoutFilter"
-			position="LOGOUT_FILTER" />
-
-		<!-- session 管理 -->
-		<session-management
-			session-authentication-strategy-ref="concurrentSessionController"
-			invalid-session-url="/toLogin" />
-	</security:http>
+	<http pattern="/login" security="none" />
+	<http pattern="/static/**" security="none" />
 
 
-	<!-- 登录验证器 -->
-	<beans:bean id="loginFilter"
-		class="com.kedacom.movision.security.filter.MyUsernamePasswordAuthenticationFilter">
-		<!-- 处理登录的action -->
-		<beans:property name="filterProcessesUrl" value="/j_spring_security_check" />
-		<beans:property name="postOnly" value="false" />
-		<!-- 验证成功后的处理 -->
-		<beans:property name="authenticationSuccessHandler"
-			ref="loginLogAuthenticationSuccessHandler" />
-		<!-- 验证失败后的处理 -->
-		<beans:property name="authenticationFailureHandler"
-			ref="simpleUrlAuthenticationFailureHandler" />
-		<beans:property name="authenticationManager" ref="authenticationManager" />
-		<beans:property name="rememberMeServices" ref="rememberMeServices" />
-		<beans:property name="sessionAuthenticationStrategy"
-			ref="concurrentSessionController" />
-	</beans:bean>
-	<beans:bean id="loginLogAuthenticationSuccessHandler"
-		class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
-		<beans:property name="defaultTargetUrl" value="/login/success"></beans:property>
-		<beans:property name="alwaysUseDefaultTargetUrl" value="true"></beans:property>
-	</beans:bean>
-	<beans:bean id="simpleUrlAuthenticationFailureHandler"
-		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
-		<beans:property name="defaultFailureUrl" value="/login/failure"></beans:property>
+	<http auto-config="true" use-expressions="true" access-denied-page="/denied">
+		<!-- default-target-url 指定了从登录页面登录后进行跳转的页面 always-use-default-target true表示登录成功后强制跳转 authentication-failure-url 表示验证失败后进入的页面 login-processing-url 设置验证登录验证地址，如果不设置，默认是j_spring_security_check 
+			username-parameter,password-parameter 设置登录用户名和密码的请求name，默认：j_username,j_password default-target-url="/user/home" -->
+		<form-login login-page="/login" always-use-default-target="true" authentication-failure-url="/login?error=1" authentication-success-handler-ref="successHandler" />
+
+		<!-- <intercept-url pattern="/index" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" /> <intercept-url pattern="/common" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" 
+			/> <intercept-url pattern="/admin" access="hasAnyRole('ROLE_ADMIN')" /> -->
+		<logout logout-success-url="/login" />
+
+		<!-- error-if-maximum-exceeded 后登陆的账号会挤掉第一次登陆的账号 session-fixation-protection 防止伪造sessionid攻击. 用户登录成功后会销毁用户当前的session. 创建新的session,并把用户信息复制到新session中. -->
+		<session-management invalid-session-url="/login?error=3" session-fixation-protection="none">
+			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true" expired-url="/login?error=2" /><!-- 阻止第二次登录 -->
+		</session-management>
+		<custom-filter ref="appInterceptor" before="FILTER_SECURITY_INTERCEPTOR" />
+	</http>
+
+
+	<authentication-manager alias="appAuthenticationManager">
+		<authentication-provider user-service-ref="userDetailsService">
+		</authentication-provider>
+	</authentication-manager>
+
+	<beans:bean id="appInterceptor" class="com.duoduo.security.manager.AppSecurityInterceptor">
+		<beans:property name="authenticationManager" ref="appAuthenticationManager" />
+		<beans:property name="accessDecisionManager" ref="appAccessDescisionManager" />
+		<beans:property name="securityMetadataSource" ref="appSecurityMetadataSource" />
 	</beans:bean>
 
 
-	<!-- remember me功能 -->
-	<beans:bean id="rememberMeFilter"
-		class="com.kedacom.movision.security.filter.MyRememberMeAuthenticationFilter">
-		<beans:property name="rememberMeServices" ref="rememberMeServices" />
-		<beans:property name="authenticationManager" ref="authenticationManager" />
-	</beans:bean>
-	<beans:bean id="rememberMeServices"
-		class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
-		<beans:property name="userDetailsService" ref="myUserDetailsService" />
-		<beans:property name="alwaysRemember" value="false" />
-		<beans:property name="tokenValiditySeconds" value="63072000" />
-		<beans:property name="key"
-			value="kedacom-movision-remKey-GVVxVQMjhNcccKYviQk7MocaWQnoJVz875KG" />
-	</beans:bean>
-	<beans:bean id="rememberMeAuthenticationProvider"
-		class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
-		<beans:property name="key"
-			value="kedacom-movision-remKey-GVVxVQMjhNcccKYviQk7MocaWQnoJVz875KG" />
-	</beans:bean>
-
-	<!-- logout 功能 -->
-	<beans:bean id="logoutFilter"
-		class="org.springframework.security.web.authentication.logout.LogoutFilter">
-		<beans:constructor-arg ref="logoutSuccessHandler" />
-		<beans:constructor-arg>
-			<beans:list>
-				<beans:ref local="rememberMeServices" />
-				<beans:ref local="securityContextLogoutHandler" />
-			</beans:list>
-		</beans:constructor-arg>
-	</beans:bean>
-	<beans:bean id="logoutSuccessHandler"
-		class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler">
-		<beans:property name="defaultTargetUrl" value="/login"></beans:property>
-		<beans:property name="alwaysUseDefaultTargetUrl" value="true"></beans:property>
-	</beans:bean>
-	<beans:bean id="securityContextLogoutHandler"
-		class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler">
-		<beans:property name="invalidateHttpSession" value="true" />
-	</beans:bean>
-
-	<!-- session 管理 -->
-
-	<beans:bean id="concurrencyFilter"
-		class="org.springframework.security.web.session.ConcurrentSessionFilter">
-		<beans:property name="sessionRegistry" ref="sessionRegistry" />
-		<beans:property name="expiredUrl" value="/toLogin" />
+	<beans:bean id="appSecurityMetadataSource" class="com.duoduo.security.manager.AppSecurityMetadataSource">
+		<beans:constructor-arg name="roleManager" ref="roleManager"></beans:constructor-arg>
+		<beans:constructor-arg name="resourceManager" ref="resourceManager"></beans:constructor-arg>
 	</beans:bean>
 
 
-	<beans:bean id="sessionRegistry"
-		class="org.springframework.security.core.session.SessionRegistryImpl" />
-
-	<beans:bean id="concurrentSessionController"
-		class="org.springframework.security.web.authentication.session.ConcurrentSessionControlStrategy">
-		<beans:constructor-arg name="sessionRegistry"
-			ref="sessionRegistry" />
-		<beans:property name="exceptionIfMaximumExceeded"
-			value="false" />
-		<beans:property name="maximumSessions" value="-1" />
-	</beans:bean>
-
-
-	<!-- 验证配置 ， 认证管理器，实现用户认证的入口 -->
-	<security:authentication-manager alias="authenticationManager">
-		<security:authentication-provider
-			ref="rememberMeAuthenticationProvider" />
-		<security:authentication-provider
-			ref="daoAuthenticationProvider" />
-	</security:authentication-manager>
-
-	<beans:bean id="daoAuthenticationProvider"
-		class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
-		<beans:property name="userDetailsService" ref="myUserDetailsService" />
-		<beans:property name="hideUserNotFoundExceptions"
-			value="false" />
-	</beans:bean>
-	<!--
-		一个自定义的filter，必须包含authenticationManager,accessDecisionManager,securityMetadataSource三个属性，
-		我们的所有控制将在这三个类中实现
-	-->
-	<beans:bean id="myFilter"
-		class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
-		<beans:property name="authenticationManager" ref="authenticationManager" />
-		<beans:property name="accessDecisionManager" ref="accessDecisionManager" />
-		<beans:property name="securityMetadataSource" ref="securityMetadataSource" />
-	</beans:bean>
-	<!-- 用户-权限，资源-权限 验证暂时没有涉及数据库操作 -->
-	<!-- 访问决策器，决定某个用户具有的角色，是否有足够的权限去访问某个资源 -->
-	<beans:bean id="accessDecisionManager"
-		class="com.kedacom.movision.security.core.MyAccessDecisionManager">
-	</beans:bean>
-	<!-- 资源源数据定义，将所有的资源和权限对应关系建立起来，即定义某一资源可以被哪些角色访问 -->
-	<beans:bean id="securityMetadataSource"
-		class="com.kedacom.movision.security.core.MyInvocationSecurityMetadataSource">
-		<beans:constructor-arg name="sqlMapClient" ref="sqlMapClient"/>
-	</beans:bean>
-
-	<!-- 切入点 -->
-	<beans:bean id="authenticationProcessingFilterEntryPoint"
-		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
-		<!-- 请求资源无权限默认转向至登录页面 -->
-		<beans:property name="loginFormUrl" value="/login"></beans:property>
+	<!-- 登录成功业务处理 -->
+	<beans:bean id="successHandler" class="com.duoduo.security.manager.LoginAuthenticationSuccessHandler">
+		<beans:property name="url" value="/index"></beans:property>  <!-- 可变换登录成功后的路径，验证用户是否拥有该权限 -->
 	</beans:bean>
 
 </beans:beans>
