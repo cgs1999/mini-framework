@@ -14,8 +14,8 @@
 	<!-- 
 	<import resource="classpath:conf/applicationContext-mail.xml" />
 	<import resource="classpath:conf/applicationContext-aspectj.xml" />
-	<import resource="classpath:conf/applicationContext-springsecurity.xml" />
 	 -->
+	<import resource="classpath:conf/applicationContext-springsecurity.xml" />
 	<!-- 加载其它jar中的配置文件 -->
 	<import resource="classpath:config/applicationContext-*.xml" />
 </beans>

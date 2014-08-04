@@ -86,7 +86,7 @@ $(document).ready(function(){
 							<input type="text" id="verifyCode" name="verifyCode" class="input-text input-verify" value="" />
 							<label class="verifycode-icon"></label>
 							<label class="reg-label" for="verifyCode"><spring:message code="login.content.login.label.verifyCode"/></label>
-							<img align="middle" id="verifyImage" src="${BMC_APP_URL}/adminVerifyImage">
+							<img align="middle" id="verifyImage" src="${BMC_APP_URL}/verifyCodeImage">
 						</div>
 						<div class="item-msg">
 							<div class="msg-div"><label class="msg-icon"></label><span class="msg"></span></div>
