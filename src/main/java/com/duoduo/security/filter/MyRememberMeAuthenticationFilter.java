@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.util.Assert;
 import org.springframework.web.filter.GenericFilterBean;
 
-import com.duoduo.security.core.UserContext;
+import com.duoduo.security.context.UserContext;
 
 /**
  * Detects if there is no <code>Authentication</code> object in the <code>SecurityContext</code>, and populates it with

@@ -48,8 +48,7 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
 			for (GrantedAuthority ga : authorities) {
 				// System.out.println(needRole.equals(ga.getAuthority()));
 				if (("0".equals(needRole) && !"anonymousUser".equals(authentication.getPrincipal()))
-						|| needRole.equals(ga.getAuthority())) { // ga is user's
-																	// role.
+						|| needRole.equals(ga.getAuthority())) { // ga is user's role.
 					return;
 				}
 			}

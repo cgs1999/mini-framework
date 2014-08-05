@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.duoduo.security.context.SessionUser;
 import com.duoduo.system.service.RoleService;
 import com.duoduo.system.service.UserService;
 import com.duoduo.system.vo.RoleVO;

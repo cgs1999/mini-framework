@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.TextEscapeUtils;
 
-import com.duoduo.security.core.UserContext;
+import com.duoduo.security.context.UserContext;
 
 /**
  * 登录校验（可以支持GET请求）

@@ -2,31 +2,35 @@ package com.duoduo.security.core;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 
-import com.duoduo.security.dao.RoleResourceDao;
 import com.duoduo.security.util.AntUrlPathMatcher;
 import com.duoduo.security.util.UrlMatcher;
-import com.duoduo.security.vo.RoleResourceVO;
+import com.duoduo.system.manager.ResourceManager;
+import com.duoduo.system.manager.RoleManager;
+import com.duoduo.system.model.Resource;
+import com.duoduo.system.model.Role;
 
 public class MyInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
-	private RoleResourceDao roleResourceDao;
 	private UrlMatcher urlMatcher = new AntUrlPathMatcher();
 	private static Map<String, Collection<ConfigAttribute>> resourceMap = null;
 
-	public MyInvocationSecurityMetadataSource(RoleResourceDao roleResourceDao) {
+	private RoleManager roleManager;
+	private ResourceManager resourceManager;
+
+	public MyInvocationSecurityMetadataSource(RoleManager roleManager, ResourceManager resourceManager) {
 		super();
-		this.roleResourceDao = roleResourceDao;
+		this.resourceManager = resourceManager;
+		this.resourceManager = resourceManager;
 		loadResourceDefine();
 	}
 
@@ -37,12 +41,29 @@ public class MyInvocationSecurityMetadataSource implements FilterInvocationSecur
 	}
 
 	private void loadResourceDefine() {
-		resourceMap = new LinkedHashMap<String, Collection<ConfigAttribute>>();
+		resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
+		// 查出所有角色
+		List<Role> roles = roleManager.listAll();
+		if (roles != null) {
+			for (Role role : roles) {
+				// 查出某个角色可以访问的资源
+				List<Resource> resources = resourceManager.listByRoleId("" + role.getId());
+				if (resources != null) {
+					for (Resource resource : resources) {
+						Collection<ConfigAttribute> configAttributes = null;
+						ConfigAttribute configAttribute = new SecurityConfig("" + role.getId());
+						if (resourceMap.containsKey(resource.getUrl())) {
+							configAttributes = resourceMap.get(resource.getUrl());
+							configAttributes.add(configAttribute);
+						} else {
+							configAttributes = new ArrayList<ConfigAttribute>();
+							configAttributes.add(configAttribute);
+							resourceMap.put(resource.getUrl(), configAttributes);
+						}
+					}
 
-		List<RoleResourceVO> roleResourceList = roleResourceDao.listAll();
-		for (RoleResourceVO roleResource : roleResourceList) {
-			if (StringUtils.isNotEmpty(roleResource.getUrl()) && !resourceMap.containsKey(roleResource.getUrl())) {
-				resourceMap.put(roleResource.getUrl(), listRoleToCollection(roleResource.getUrl(), roleResourceList));
+				}
+
 			}
 		}
 
@@ -51,16 +72,6 @@ public class MyInvocationSecurityMetadataSource implements FilterInvocationSecur
 		list.add(new SecurityConfig("0"));
 		resourceMap.put("/", list);
 		resourceMap.put("/**", list);
-	}
-
-	private Collection<ConfigAttribute> listRoleToCollection(String url, List<RoleResourceVO> roleResourceList) {
-		List<ConfigAttribute> list = new ArrayList<ConfigAttribute>();
-		for (RoleResourceVO roleResource : roleResourceList) {
-			if (url.equals(roleResource.getUrl())) {
-				list.add(new SecurityConfig(String.valueOf(roleResource.getRoleId())));
-			}
-		}
-		return list;
 	}
 
 	@Override
