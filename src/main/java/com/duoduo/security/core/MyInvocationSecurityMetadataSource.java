@@ -19,6 +19,12 @@ import com.duoduo.system.manager.RoleManager;
 import com.duoduo.system.model.Resource;
 import com.duoduo.system.model.Role;
 
+/**
+ * 从数据库中查询出资源和权限（角色），并将它们的关系对应起来
+ * @author chengesheng@gmail.com
+ * @date 2014-8-6 下午11:32:19
+ * @version 1.0.0
+ */
 public class MyInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
 	private UrlMatcher urlMatcher = new AntUrlPathMatcher();
@@ -36,7 +42,6 @@ public class MyInvocationSecurityMetadataSource implements FilterInvocationSecur
 
 	@Override
 	public Collection<ConfigAttribute> getAllConfigAttributes() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

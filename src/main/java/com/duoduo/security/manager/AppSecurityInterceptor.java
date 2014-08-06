@@ -19,7 +19,9 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 
 /**
  * 自定义拦截器
- * @author Luxh
+ * @author chengesheng@gmail.com
+ * @date 2014-8-6 下午11:55:38
+ * @version 1.0.0
  */
 public class AppSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
 

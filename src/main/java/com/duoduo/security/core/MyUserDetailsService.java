@@ -28,11 +28,11 @@ import com.duoduo.system.vo.UserVO;
  * @date 2014-8-4 上午1:17:45
  * @version 1.0.0
  */
-@Service("myUserDetailsService")
 @Transactional
+@Service("myUserDetailsService")
 public class MyUserDetailsService implements UserDetailsService {
 
-	protected Logger logger = LoggerFactory.getLogger(getClass());
+	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Resource
 	private UserService userService;
@@ -42,39 +42,41 @@ public class MyUserDetailsService implements UserDetailsService {
 	/**
 	 * @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
 	 */
-
 	@Override
-	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException, DataAccessException {
+	public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException, DataAccessException {
 		SessionUser sessionUser = new SessionUser();
 		try {
+			// 获取用户信息
 			UserVO userVO = null;
 			try {
-				userVO = userService.getByAccount(userName);
+				userVO = userService.getByAccount(account);
 			} catch (Exception e) {
 				throw new RuntimeException("您输入的帐号或密码有误！");
 			}
 			if (userVO == null) {
 				throw new RuntimeException("您输入的帐号或密码有误！");
 			}
-
-			sessionUser.setUsername(userName);
+			// 设置用户信息
+			sessionUser.setUsername(account);
 			sessionUser.setUser(userVO);
 
-			/*************************** 权限控制 *****************************/
+			// 获取用户所拥有的角色
 			List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
 			List<RoleVO> listUserRole = roleService.listByUserId("" + userVO.getId());
 			for (RoleVO roleVO : listUserRole) {
-				SimpleGrantedAuthority general = new SimpleGrantedAuthority(String.valueOf(roleVO.getId()));
+				SimpleGrantedAuthority general = new SimpleGrantedAuthority("" + roleVO.getId());
 				auths.add(general);
 			}
-
+			// 默认角色
 			SimpleGrantedAuthority general = new SimpleGrantedAuthority("0");
 			auths.add(general);
-
+			// 设置用户角色信息
 			sessionUser.setAuthorities(auths);
 		} catch (RuntimeException e) {
+			logger.info(e.getMessage());
 			throw new UsernameNotFoundException(e.getMessage());
 		} catch (Exception e) {
+			logger.info(e.getMessage());
 			throw new UsernameNotFoundException("系统异常，请联系管理员！");
 		}
 		return sessionUser;
