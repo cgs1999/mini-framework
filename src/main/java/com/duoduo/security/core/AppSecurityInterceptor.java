@@ -1,4 +1,4 @@
-package com.duoduo.security.manager;
+package com.duoduo.security.core;
 
 import java.io.IOException;
 

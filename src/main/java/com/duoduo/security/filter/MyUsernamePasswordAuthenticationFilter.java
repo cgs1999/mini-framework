@@ -18,10 +18,10 @@ import com.duoduo.security.context.UserContext;
 
 /**
  * 登录校验（可以支持GET请求）
- * @author yinjian
- * @date 2012-2-28
+ * @author chengesheng@gmail.com
+ * @date 2014-8-6 上午12:09:03
+ * @version 1.0.0
  */
-
 public class MyUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 	public static final String SPRING_SECURITY_FORM_USERNAME_KEY = "j_username";
@@ -33,7 +33,7 @@ public class MyUsernamePasswordAuthenticationFilter extends UsernamePasswordAuth
 	public static final String SPRING_SECURITY_FORM_USER_TYPE_KEY = "j_user_type";
 	public static final String SPRING_SECURITY_LAST_USERNAME_KEY = "SPRING_SECURITY_LAST_USERNAME";
 	private boolean postOnly = true;
-	private static String SESSION_KEY = "adminVerifyCode";
+	private static String SESSION_KEY = "verifyCode";
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
