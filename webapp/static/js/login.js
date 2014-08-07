@@ -141,7 +141,7 @@ Mo.Login = {
 		});
 
 		$("#verifyImage").bind("click", function(){
-			document.getElementById("verifyImage").src=Mo.Base.getAppUrl() + "/adminVerifyImage?random="+new Date().getTime();
+			document.getElementById("verifyImage").src=Mo.Base.getAppUrl() + "/verifyCodeImage?random="+new Date().getTime();
 		});
 
 		$("#reg-email").keydown(function(){
