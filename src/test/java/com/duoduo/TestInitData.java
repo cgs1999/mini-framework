@@ -143,7 +143,7 @@ public class TestInitData extends BaseTest {
 		// 初始化权限管理资源
 		initResourcePermissionData(resource.getId());
 		// 初始化资源管理资源
-		initResourceResourceData(resource.getId());
+		initResource2Data(resource.getId());
 	}
 
 	/**
@@ -248,23 +248,392 @@ public class TestInitData extends BaseTest {
 	 * 角色管理资源
 	 */
 	private void initResourceRoleData(Long parentId) {
-		// TODO Auto-generated method stub
+		ResourceVO resource = new ResourceVO();
+		resource.setName("角色管理");
+		resource.setUrl("/system/role/list");
+		resource.setType("1");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(1020);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("角色管理");
 
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+
+		// 创建角色
+		initResourceRoleCreateData(resource.getId());
+		// 修改角色
+		initResourceRoleUpdateData(resource.getId());
+		// 查看角色信息
+		initResourceRoleReadData(resource.getId());
+		// 删除角色
+		initResourceRoleDeleteData(resource.getId());
+		// 查看角色列表
+		initResourceRoleListData(resource.getId());
 	}
 
+	private void initResourceRoleCreateData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("创建角色信息");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(102010);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("创建角色信息");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+	}
+
+	private void initResourceRoleReadData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("查看角色信息");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(102020);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("查看角色信息");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+	}
+
+	private void initResourceRoleUpdateData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("修改角色信息");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(102030);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("修改角色信息");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+	}
+
+	private void initResourceRoleDeleteData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("删除角色信息");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(102040);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("删除角色信息");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+	}
+
+	private void initResourceRoleListData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("查看角色列表");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(102050);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("查看角色列表");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+	}
+
+	/**
+	 * 权限分类管理资源
+	 */
 	private void initResourcePermissionCategoryData(Long parentId) {
-		// TODO Auto-generated method stub
+		ResourceVO resource = new ResourceVO();
+		resource.setName("权限分类管理");
+		resource.setUrl("/system/permissionCategory/list");
+		resource.setType("1");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(1030);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("权限分类管理");
 
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+
+		// 创建权限分类
+		initResourcePermissionCategoryCreateData(resource.getId());
+		// 修改权限分类
+		initResourcePermissionCategoryUpdateData(resource.getId());
+		// 查看权限分类信息
+		initResourcePermissionCategoryReadData(resource.getId());
+		// 删除权限分类
+		initResourcePermissionCategoryDeleteData(resource.getId());
+		// 查看权限分类列表
+		initResourcePermissionCategoryListData(resource.getId());
 	}
 
+	private void initResourcePermissionCategoryCreateData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("创建权限分类信息");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(103010);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("创建权限分类信息");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+	}
+
+	private void initResourcePermissionCategoryReadData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("查看权限分类信息");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(103020);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("查看权限分类信息");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+	}
+
+	private void initResourcePermissionCategoryUpdateData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("修改权限分类信息");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(103030);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("修改权限分类信息");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+	}
+
+	private void initResourcePermissionCategoryDeleteData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("删除权限分类信息");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(103040);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("删除权限分类信息");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+	}
+
+	private void initResourcePermissionCategoryListData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("查看权限分类列表");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(103050);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("查看权限分类列表");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+	}
+
+	/**
+	 * 权限管理资源
+	 */
 	private void initResourcePermissionData(Long parentId) {
-		// TODO Auto-generated method stub
+		ResourceVO resource = new ResourceVO();
+		resource.setName("权限管理");
+		resource.setUrl("/system/permission/list");
+		resource.setType("1");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(1040);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("权限管理");
 
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+
+		// 创建权限
+		initResourcePermissionCreateData(resource.getId());
+		// 修改权限
+		initResourcePermissionUpdateData(resource.getId());
+		// 查看权限信息
+		initResourcePermissionReadData(resource.getId());
+		// 删除权限
+		initResourcePermissionDeleteData(resource.getId());
+		// 查看权限列表
+		initResourcePermissionListData(resource.getId());
 	}
 
-	private void initResourceResourceData(Long parentId) {
-		// TODO Auto-generated method stub
+	private void initResourcePermissionCreateData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("创建权限信息");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(104010);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("创建权限信息");
 
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+	}
+
+	private void initResourcePermissionReadData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("查看权限信息");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(104020);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("查看权限信息");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+	}
+
+	private void initResourcePermissionUpdateData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("修改权限信息");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(104030);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("修改权限信息");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+	}
+
+	private void initResourcePermissionDeleteData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("删除权限信息");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(104040);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("删除权限信息");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+	}
+
+	private void initResourcePermissionListData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("查看权限列表");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(104050);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("查看权限列表");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+	}
+
+	/**
+	 * 资源管理资源
+	 */
+	private void initResource2Data(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("资源管理");
+		resource.setUrl("/system/resource/list");
+		resource.setType("1");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(1050);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("资源管理");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+
+		// 创建资源
+		initResource2CreateData(resource.getId());
+		// 修改资源
+		initResource2UpdateData(resource.getId());
+		// 查看资源信息
+		initResource2ReadData(resource.getId());
+		// 删除资源
+		initResource2DeleteData(resource.getId());
+		// 查看资源列表
+		initResource2ListData(resource.getId());
+	}
+
+	private void initResource2CreateData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("创建资源信息");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(105010);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("创建资源信息");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+	}
+
+	private void initResource2ReadData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("查看资源信息");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(105020);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("查看资源信息");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+	}
+
+	private void initResource2UpdateData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("修改资源信息");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(105030);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("修改资源信息");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+	}
+
+	private void initResource2DeleteData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("删除资源信息");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(105040);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("删除资源信息");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
+	}
+
+	private void initResource2ListData(Long parentId) {
+		ResourceVO resource = new ResourceVO();
+		resource.setName("查看资源列表");
+		resource.setUrl("");
+		resource.setType("2");
+		resource.setParentId(parentId);
+		resource.setOrderIndex(105050);
+		resource.setEnable(Boolean.TRUE);
+		resource.setMemo("查看资源列表");
+
+		resource = resourceService.create(resource);
+		Assert.assertNotNull(resource);
 	}
 
 	/**
