@@ -51,7 +51,7 @@ public class TestInitData extends BaseTest {
 		System.out.println("rootRoleId=" + root.getId());
 
 		// 初始化系统模块资源
-		initResourceSystemData(root.getId());
+		resourceIds = initResourceSystemData(root.getId());
 
 		// 初始化其他模块资源
 		// initOtherResourceData(root.getId());
@@ -59,16 +59,69 @@ public class TestInitData extends BaseTest {
 
 	@Test
 	public void initPermissionCategoryAndPermissionData() {
+		// 初始化权限分类和权限——用户管理
+		initPermissionCategoryAndPermissionUserData();
+	}
+
+	private void initPermissionCategoryAndPermissionUserData() {
 		PermissionCategoryVO permissionCategory = new PermissionCategoryVO();
 		permissionCategory.setName("用户管理");
-
+		permissionCategory.setMemo("用户管理");
 		permissionCategory = permissionCategoryService.create(permissionCategory);
 		Assert.assertNotNull(permissionCategory);
 
+		initPermissionCategoryAndPermissionUserCreateData(permissionCategory.getId());
+		initPermissionCategoryAndPermissionUserReadData(permissionCategory.getId());
+		initPermissionCategoryAndPermissionUserUpdateData(permissionCategory.getId());
+		initPermissionCategoryAndPermissionUserDeleteData(permissionCategory.getId());
+		initPermissionCategoryAndPermissionUserListData(permissionCategory.getId());
+	}
+
+	private void initPermissionCategoryAndPermissionUserCreateData(Long permissionCategoryId) {
 		PermissionVO permission = new PermissionVO();
-		permission.setName("创建用户");
-		permission.setPermissionCategoryId(permissionCategory.getId());
-		// FIXME 创建用户的资源
+		permission.setName("创建用户信息");
+		permission.setMemo("创建用户信息");
+		permission.setPermissionCategoryId(permissionCategoryId);
+		permission.setResourceIds(resourceIds);
+		permission = permissionService.create(permission);
+		Assert.assertNotNull(permission);
+	}
+
+	private void initPermissionCategoryAndPermissionUserReadData(Long permissionCategoryId) {
+		PermissionVO permission = new PermissionVO();
+		permission.setName("查看用户信息");
+		permission.setMemo("查看用户信息");
+		permission.setPermissionCategoryId(permissionCategoryId);
+		permission.setResourceIds(resourceIds);
+		permission = permissionService.create(permission);
+		Assert.assertNotNull(permission);
+	}
+
+	private void initPermissionCategoryAndPermissionUserUpdateData(Long permissionCategoryId) {
+		PermissionVO permission = new PermissionVO();
+		permission.setName("修改用户信息");
+		permission.setMemo("修改用户信息");
+		permission.setPermissionCategoryId(permissionCategoryId);
+		permission.setResourceIds(resourceIds);
+		permission = permissionService.create(permission);
+		Assert.assertNotNull(permission);
+	}
+
+	private void initPermissionCategoryAndPermissionUserDeleteData(Long permissionCategoryId) {
+		PermissionVO permission = new PermissionVO();
+		permission.setName("删除用户信息");
+		permission.setMemo("删除用户信息");
+		permission.setPermissionCategoryId(permissionCategoryId);
+		permission.setResourceIds(resourceIds);
+		permission = permissionService.create(permission);
+		Assert.assertNotNull(permission);
+	}
+
+	private void initPermissionCategoryAndPermissionUserListData(Long permissionCategoryId) {
+		PermissionVO permission = new PermissionVO();
+		permission.setName("查看用户列表");
+		permission.setMemo("查看用户列表");
+		permission.setPermissionCategoryId(permissionCategoryId);
 		permission.setResourceIds(resourceIds);
 		permission = permissionService.create(permission);
 		Assert.assertNotNull(permission);
@@ -121,7 +174,7 @@ public class TestInitData extends BaseTest {
 	/**
 	 * 初始化系统模块资源
 	 */
-	private void initResourceSystemData(Long parentId) {
+	private String initResourceSystemData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("系统配置");
 		resource.setUrl("");
@@ -134,22 +187,25 @@ public class TestInitData extends BaseTest {
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
 
+		String ret = "" + resource.getId();
 		// 初始化用户管理资源
-		initResourceUserData(resource.getId());
+		ret += "," + initResourceUserData(resource.getId());
 		// 初始化角色管理资源
-		initResourceRoleData(resource.getId());
+		ret += "," + initResourceRoleData(resource.getId());
 		// 初始化权限分类管理资源
-		initResourcePermissionCategoryData(resource.getId());
+		ret += "," + initResourcePermissionCategoryData(resource.getId());
 		// 初始化权限管理资源
-		initResourcePermissionData(resource.getId());
+		ret += "," + initResourcePermissionData(resource.getId());
 		// 初始化资源管理资源
-		initResource2Data(resource.getId());
+		ret += "," + initResource2Data(resource.getId());
+
+		return ret;
 	}
 
 	/**
 	 * 用户管理资源
 	 */
-	private void initResourceUserData(Long parentId) {
+	private String initResourceUserData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("用户管理");
 		resource.setUrl("/system/user/list");
@@ -162,19 +218,22 @@ public class TestInitData extends BaseTest {
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
 
+		String ret = "" + resource.getId();
 		// 创建用户
-		initResourceUserCreateData(resource.getId());
+		ret += "," + initResourceUserCreateData(resource.getId());
 		// 修改用户
-		initResourceUserUpdateData(resource.getId());
+		ret += "," + initResourceUserUpdateData(resource.getId());
 		// 查看用户信息
-		initResourceUserReadData(resource.getId());
+		ret += "," + initResourceUserReadData(resource.getId());
 		// 删除用户
-		initResourceUserDeleteData(resource.getId());
+		ret += "," + initResourceUserDeleteData(resource.getId());
 		// 查看用户列表
-		initResourceUserListData(resource.getId());
+		ret += "," + initResourceUserListData(resource.getId());
+
+		return ret;
 	}
 
-	private void initResourceUserCreateData(Long parentId) {
+	private String initResourceUserCreateData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("创建用户信息");
 		resource.setUrl("");
@@ -186,9 +245,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResourceUserReadData(Long parentId) {
+	private String initResourceUserReadData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("查看用户信息");
 		resource.setUrl("");
@@ -200,9 +260,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResourceUserUpdateData(Long parentId) {
+	private String initResourceUserUpdateData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("修改用户信息");
 		resource.setUrl("");
@@ -214,9 +275,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResourceUserDeleteData(Long parentId) {
+	private String initResourceUserDeleteData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("删除用户信息");
 		resource.setUrl("");
@@ -228,9 +290,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResourceUserListData(Long parentId) {
+	private String initResourceUserListData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("查看用户列表");
 		resource.setUrl("");
@@ -242,12 +305,13 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
 	/**
 	 * 角色管理资源
 	 */
-	private void initResourceRoleData(Long parentId) {
+	private String initResourceRoleData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("角色管理");
 		resource.setUrl("/system/role/list");
@@ -260,19 +324,22 @@ public class TestInitData extends BaseTest {
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
 
+		String ret = "" + resource.getId();
 		// 创建角色
-		initResourceRoleCreateData(resource.getId());
+		ret += "," + initResourceRoleCreateData(resource.getId());
 		// 修改角色
-		initResourceRoleUpdateData(resource.getId());
+		ret += "," + initResourceRoleUpdateData(resource.getId());
 		// 查看角色信息
-		initResourceRoleReadData(resource.getId());
+		ret += "," + initResourceRoleReadData(resource.getId());
 		// 删除角色
-		initResourceRoleDeleteData(resource.getId());
+		ret += "," + initResourceRoleDeleteData(resource.getId());
 		// 查看角色列表
-		initResourceRoleListData(resource.getId());
+		ret += "," + initResourceRoleListData(resource.getId());
+
+		return ret;
 	}
 
-	private void initResourceRoleCreateData(Long parentId) {
+	private String initResourceRoleCreateData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("创建角色信息");
 		resource.setUrl("");
@@ -284,9 +351,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResourceRoleReadData(Long parentId) {
+	private String initResourceRoleReadData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("查看角色信息");
 		resource.setUrl("");
@@ -298,9 +366,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResourceRoleUpdateData(Long parentId) {
+	private String initResourceRoleUpdateData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("修改角色信息");
 		resource.setUrl("");
@@ -312,9 +381,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResourceRoleDeleteData(Long parentId) {
+	private String initResourceRoleDeleteData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("删除角色信息");
 		resource.setUrl("");
@@ -326,9 +396,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResourceRoleListData(Long parentId) {
+	private String initResourceRoleListData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("查看角色列表");
 		resource.setUrl("");
@@ -340,12 +411,13 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
 	/**
 	 * 权限分类管理资源
 	 */
-	private void initResourcePermissionCategoryData(Long parentId) {
+	private String initResourcePermissionCategoryData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("权限分类管理");
 		resource.setUrl("/system/permissionCategory/list");
@@ -358,19 +430,22 @@ public class TestInitData extends BaseTest {
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
 
+		String ret = "" + resource.getId();
 		// 创建权限分类
-		initResourcePermissionCategoryCreateData(resource.getId());
+		ret += "," + initResourcePermissionCategoryCreateData(resource.getId());
 		// 修改权限分类
-		initResourcePermissionCategoryUpdateData(resource.getId());
+		ret += "," + initResourcePermissionCategoryUpdateData(resource.getId());
 		// 查看权限分类信息
-		initResourcePermissionCategoryReadData(resource.getId());
+		ret += "," + initResourcePermissionCategoryReadData(resource.getId());
 		// 删除权限分类
-		initResourcePermissionCategoryDeleteData(resource.getId());
+		ret += "," + initResourcePermissionCategoryDeleteData(resource.getId());
 		// 查看权限分类列表
-		initResourcePermissionCategoryListData(resource.getId());
+		ret += "," + initResourcePermissionCategoryListData(resource.getId());
+
+		return ret;
 	}
 
-	private void initResourcePermissionCategoryCreateData(Long parentId) {
+	private String initResourcePermissionCategoryCreateData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("创建权限分类信息");
 		resource.setUrl("");
@@ -382,9 +457,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResourcePermissionCategoryReadData(Long parentId) {
+	private String initResourcePermissionCategoryReadData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("查看权限分类信息");
 		resource.setUrl("");
@@ -396,9 +472,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResourcePermissionCategoryUpdateData(Long parentId) {
+	private String initResourcePermissionCategoryUpdateData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("修改权限分类信息");
 		resource.setUrl("");
@@ -410,9 +487,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResourcePermissionCategoryDeleteData(Long parentId) {
+	private String initResourcePermissionCategoryDeleteData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("删除权限分类信息");
 		resource.setUrl("");
@@ -424,9 +502,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResourcePermissionCategoryListData(Long parentId) {
+	private String initResourcePermissionCategoryListData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("查看权限分类列表");
 		resource.setUrl("");
@@ -438,12 +517,13 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
 	/**
 	 * 权限管理资源
 	 */
-	private void initResourcePermissionData(Long parentId) {
+	private String initResourcePermissionData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("权限管理");
 		resource.setUrl("/system/permission/list");
@@ -456,19 +536,22 @@ public class TestInitData extends BaseTest {
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
 
+		String ret = "" + resource.getId();
 		// 创建权限
-		initResourcePermissionCreateData(resource.getId());
+		ret += "," + initResourcePermissionCreateData(resource.getId());
 		// 修改权限
-		initResourcePermissionUpdateData(resource.getId());
+		ret += "," + initResourcePermissionUpdateData(resource.getId());
 		// 查看权限信息
-		initResourcePermissionReadData(resource.getId());
+		ret += "," + initResourcePermissionReadData(resource.getId());
 		// 删除权限
-		initResourcePermissionDeleteData(resource.getId());
+		ret += "," + initResourcePermissionDeleteData(resource.getId());
 		// 查看权限列表
-		initResourcePermissionListData(resource.getId());
+		ret += "," + initResourcePermissionListData(resource.getId());
+
+		return ret;
 	}
 
-	private void initResourcePermissionCreateData(Long parentId) {
+	private String initResourcePermissionCreateData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("创建权限信息");
 		resource.setUrl("");
@@ -480,9 +563,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResourcePermissionReadData(Long parentId) {
+	private String initResourcePermissionReadData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("查看权限信息");
 		resource.setUrl("");
@@ -494,9 +578,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResourcePermissionUpdateData(Long parentId) {
+	private String initResourcePermissionUpdateData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("修改权限信息");
 		resource.setUrl("");
@@ -508,9 +593,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResourcePermissionDeleteData(Long parentId) {
+	private String initResourcePermissionDeleteData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("删除权限信息");
 		resource.setUrl("");
@@ -522,9 +608,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResourcePermissionListData(Long parentId) {
+	private String initResourcePermissionListData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("查看权限列表");
 		resource.setUrl("");
@@ -536,12 +623,13 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
 	/**
 	 * 资源管理资源
 	 */
-	private void initResource2Data(Long parentId) {
+	private String initResource2Data(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("资源管理");
 		resource.setUrl("/system/resource/list");
@@ -554,19 +642,22 @@ public class TestInitData extends BaseTest {
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
 
+		String ret = "" + resource.getId();
 		// 创建资源
-		initResource2CreateData(resource.getId());
+		ret += "," + initResource2CreateData(resource.getId());
 		// 修改资源
-		initResource2UpdateData(resource.getId());
+		ret += "," + initResource2UpdateData(resource.getId());
 		// 查看资源信息
-		initResource2ReadData(resource.getId());
+		ret += "," + initResource2ReadData(resource.getId());
 		// 删除资源
-		initResource2DeleteData(resource.getId());
+		ret += "," + initResource2DeleteData(resource.getId());
 		// 查看资源列表
-		initResource2ListData(resource.getId());
+		ret += "," + initResource2ListData(resource.getId());
+
+		return ret;
 	}
 
-	private void initResource2CreateData(Long parentId) {
+	private String initResource2CreateData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("创建资源信息");
 		resource.setUrl("");
@@ -578,9 +669,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResource2ReadData(Long parentId) {
+	private String initResource2ReadData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("查看资源信息");
 		resource.setUrl("");
@@ -592,9 +684,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResource2UpdateData(Long parentId) {
+	private String initResource2UpdateData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("修改资源信息");
 		resource.setUrl("");
@@ -606,9 +699,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResource2DeleteData(Long parentId) {
+	private String initResource2DeleteData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("删除资源信息");
 		resource.setUrl("");
@@ -620,9 +714,10 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
-	private void initResource2ListData(Long parentId) {
+	private String initResource2ListData(Long parentId) {
 		ResourceVO resource = new ResourceVO();
 		resource.setName("查看资源列表");
 		resource.setUrl("");
@@ -634,6 +729,7 @@ public class TestInitData extends BaseTest {
 
 		resource = resourceService.create(resource);
 		Assert.assertNotNull(resource);
+		return "" + resource.getId();
 	}
 
 	/**
